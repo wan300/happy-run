@@ -18,6 +18,7 @@ object Endpoints {
     const val OSS_BUCKET = "lptiyu-data"
 
     const val BEFORE_RUN = "Run2/beforeRunV260"
+    const val SET_RUN_ZONE = "Run/setRunZone"
     const val START = "Run/getTimestampV278"
     const val LOCATION = "Run/setRunLocationRecord"
     const val OSS_STS = "report/getOssSts"
@@ -31,6 +32,7 @@ object Endpoints {
 
     val CONTRACTS: Map<String, Contract> = mapOf(
         BEFORE_RUN to Contract(newerSignature = true, encrypted = true, dynamic = true),
+        SET_RUN_ZONE to Contract(),
         START to Contract(),
         LOCATION to Contract(newerSignature = true, dynamic = true),
         OSS_STS to Contract(newerSignature = true, encrypted = true, dynamic = true),

@@ -39,6 +39,7 @@ import com.lepao.companion.core.SessionContext
 import com.lepao.companion.core.SessionStore
 import com.lepao.companion.core.TokenService
 import com.lepao.companion.run.RunController
+import com.lepao.companion.run.EastCampusZone
 import com.lepao.companion.run.RunForegroundService
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -237,7 +238,9 @@ class MainActivity : AppCompatActivity() {
         btnCheckRefresh.setOnClickListener { checkAndRefreshLogin() }
         btnClearLogin.setOnClickListener { confirmClearLogin() }
         btnInspect.setOnClickListener { refreshConfig() }
-        btnStartRun.setOnClickListener { confirmStartRun() }
+        btnStartRun.setOnClickListener {
+            if (canSelectEastCampus()) confirmEastCampus() else confirmStartRun()
+        }
         btnVerify.setOnClickListener { verifyRun() }
         btnOpenOfficial.setOnClickListener { openOfficialApp() }
         btnResume.setOnClickListener { resumeSession() }
@@ -748,10 +751,12 @@ class MainActivity : AppCompatActivity() {
         btnCheckRefresh.isEnabled = !busy && dashboardLoaded && session != null && noBlockingRun
         btnClearLogin.isEnabled = !busy && dashboardLoaded && session != null && noBlockingRun
         btnInspect.isEnabled = !busy && dashboardLoaded && session != null
+        val canSelectEastCampus = canSelectEastCampus()
+        btnStartRun.setText(if (canSelectEastCampus) R.string.btn_select_east_campus else R.string.btn_start_run)
         btnStartRun.isEnabled = !busy &&
             dashboardLoaded &&
             session != null &&
-            readiness?.ok == true &&
+            (canSelectEastCampus || readiness?.ok == true) &&
             noBlockingRun
         btnVerify.isEnabled = !busy && canVerify(state)
         btnOpenOfficial.isEnabled = !busy
@@ -825,9 +830,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun refreshConfig() {
+    private fun refreshConfig(selectEastCampus: Boolean = false) {
         runAction {
-            val view = RunController.inspect(this@MainActivity)
+            val view = if (selectEastCampus) RunController.selectEastCampus(this@MainActivity)
+                else RunController.inspect(this@MainActivity)
             mainHandler.post {
                 if (isFinishing || isDestroyed) return@post
                 readiness = view
@@ -839,6 +845,23 @@ class MainActivity : AppCompatActivity() {
                 render()
             }
         }
+    }
+
+    private fun canSelectEastCampus(): Boolean {
+        val rules = readiness?.rules ?: return false
+        val session = dashboard.session ?: return false
+        return EastCampusZone.supports(rules, session.identity["school_id"]) &&
+            !EastCampusZone.isSelected(rules) && EastCampusZone.targetId(rules) != null
+    }
+
+    private fun confirmEastCampus() {
+        if (!canSelectEastCampus() || dashboard.blocking != null) return
+        AlertDialog.Builder(this)
+            .setTitle(R.string.btn_select_east_campus)
+            .setMessage(R.string.dialog_select_east_campus)
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .setPositiveButton(R.string.dialog_confirm) { _, _ -> refreshConfig(selectEastCampus = true) }
+            .show()
     }
 
     private fun confirmStartRun() {

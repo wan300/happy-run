@@ -62,6 +62,21 @@ object RunController {
         }
     }
 
+    fun selectEastCampus(context: Context): ReadinessView {
+        val session = SessionStore.load() ?: return ReadinessView.blocked("尚未获取登录态")
+        if (RunStore.blockingRun() != null) {
+            return ReadinessView.blocked("请先完成或核对当前会话，再切换东校区")
+        }
+        return try {
+            val rules = ConfigService.selectEastCampus(context, session)
+            AutoPlanner.plan(context, rules, session.identity, RunClock.nowEpoch())
+        } catch (_: DeliveryUncertain) {
+            ReadinessView.blocked("东校区切换结果待核对，请刷新配置")
+        } catch (error: Exception) {
+            ReadinessView.blocked("切换或核对东校区失败：${error.message}")
+        }
+    }
+
     fun start(context: Context): OperationResult {
         val stored = SessionStore.load()
             ?: return OperationResult(false, "尚未获取登录态", RunStore.latest())
@@ -95,7 +110,11 @@ object RunController {
         }
 
         val now = RunClock.nowEpoch()
-        val readiness = AutoPlanner.plan(context, rules, session.identity, now)
+        val readiness = try {
+            AutoPlanner.plan(context, rules, session.identity, now)
+        } catch (error: Exception) {
+            return OperationResult(false, "规划跑步路线失败：${error.message}", RunStore.latest())
+        }
         if (!readiness.ok) {
             return OperationResult(false, readiness.blockers.joinToString("；"), null)
         }

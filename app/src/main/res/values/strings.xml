@@ -53,6 +53,8 @@
     <string name="btn_refresh_config">刷新配置</string>
     <string name="run_bg_hint">开始后状态栏会常驻本应用的跑步通知，请不要划掉该通知或清理后台；首次开始时会请求加入电池优化白名单，请选择允许，否则系统可能在跑步中途结束进程导致上传/提交失败。</string>
     <string name="btn_start_run">开始跑步</string>
+    <string name="btn_select_east_campus">切换东校区</string>
+    <string name="dialog_select_east_campus">将乐跑账号的当前跑区设为北京交通大学东校区。切换后会重新读取跑步规则。</string>
     <string name="blocking_title">存在未结束会话，禁止开始新跑步</string>
     <string name="blocking_detail">%1$s · %2$s · 进度 %3$s / %4$s</string>
     <string name="dialog_start_title">开始跑步</string>

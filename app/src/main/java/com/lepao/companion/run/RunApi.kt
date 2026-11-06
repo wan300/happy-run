@@ -161,7 +161,7 @@ class CoreRunUploader(private val uploader: OssUploader) : RunUploader {
 class AndroidTrackProvider(private val context: Context) : TrackProvider {
 
     override fun build(plan: PlannedRun): List<TrackPoint> =
-        RouteEngine.buildTrack(context, plan.durationSec, plan.seed, RouteEngine.waypoints(plan.via))
+        RouteEngine.buildTrack(context, plan)
             .map { sample -> TrackPoint(sample.t, sample.lat, sample.lng, sample.arc) }
 
     override fun position(track: List<TrackPoint>, elapsedSeconds: Double): TrackPoint {

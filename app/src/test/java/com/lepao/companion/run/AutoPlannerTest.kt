@@ -74,7 +74,7 @@ class AutoPlannerTest {
     )
 
     private fun evaluate(request: PlanRequest): PlanResult =
-        PlanEvaluator.evaluate(request) { duration, _, _ -> track(duration) }
+        PlanEvaluator.evaluate(request) { duration, _, _, _ -> track(duration) }
 
     @Test
     fun outsideEntryWindowBlocks() {
@@ -254,7 +254,7 @@ class AutoPlannerTest {
     fun schoolMismatchBlocks() {
         val result = PlanEvaluator.evaluate(
             request().copy(identitySchoolId = "9999"),
-        ) { duration, _, _ -> track(duration) }
+        ) { duration, _, _, _ -> track(duration) }
 
         assertFalse(result.ok)
         assertTrue(result.blockers.any { it.contains("学校") })

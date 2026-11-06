@@ -2,6 +2,8 @@ package com.lepao.companion.run
 
 import android.content.Context
 import com.lepao.companion.core.PlannedVia
+import com.lepao.companion.core.PlannedRun
+import com.lepao.companion.core.RouteTemplate
 import com.lepao.companion.core.StateException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -32,9 +34,8 @@ object RouteEngine {
     /**
      * One simulated position.
      *
-     * [arc] is the wrapped arc-length offset on the corridor (0..length). [speed] is the
-     * metres-per-second value the route writer serialises; it is derived from the unwrapped
-     * integrated distance so a corridor wrap never produces a negative speed.
+     * [arc] is the corridor offset for legacy routes and cumulative distance for the closed loop.
+     * [speed] is calculated from cumulative distance in metres per second.
      */
     data class Sample(
         val t: Double,
@@ -46,6 +47,7 @@ object RouteEngine {
 
     /** Corridor asset written by the capture slice: `{"points":[[lat,lng],...]}`. */
     const val CORRIDOR_ASSET = "corridor.json"
+    const val EAST_CAMPUS_ASSET = "east-campus-track.json"
 
     /** Resampling step of the arc-length index; the spec requires <= 0.5 m. */
     const val CORRIDOR_STEP_M = 0.5
@@ -127,6 +129,13 @@ object RouteEngine {
             val before = at(max(0.0, distance - 2.0))
             val after = at(min(length, distance + 2.0))
             return atan2(after[1] - before[1], after[0] - before[0])
+        }
+
+        fun loopBearing(distance: Double): Double {
+            val before = at((distance - 2.0 + length) % length)
+            val after = at((distance + 2.0) % length)
+            val east = (after[1] - before[1]) * cos(Math.toRadians(before[0]))
+            return atan2(east, after[0] - before[0])
         }
 
         companion object {
@@ -318,9 +327,16 @@ object RouteEngine {
         ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(value.toFloat()).getFloat(0).toDouble()
 
     /** Raw corridor vertices read from `assets/corridor.json` as `[lat, lng]` pairs. */
-    fun corridor(context: Context): List<DoubleArray> {
+    fun corridor(
+        context: Context,
+        template: RouteTemplate = RouteTemplate.LEGACY_CORRIDOR,
+    ): List<DoubleArray> {
+        val asset = when (template) {
+            RouteTemplate.LEGACY_CORRIDOR -> CORRIDOR_ASSET
+            RouteTemplate.EAST_CAMPUS_TRACK -> EAST_CAMPUS_ASSET
+        }
         val text = try {
-            context.assets.open(CORRIDOR_ASSET).bufferedReader(Charsets.UTF_8).use { it.readText() }
+            context.assets.open(asset).bufferedReader(Charsets.UTF_8).use { it.readText() }
         } catch (error: java.io.IOException) {
             throw StateException("无法读取走廊文件：${error.message}")
         }
@@ -377,10 +393,16 @@ object RouteEngine {
 
     fun buildTrack(
         context: Context,
-        durationSec: Int,
-        seed: Long,
-        via: List<Waypoint> = emptyList(),
-    ): List<Sample> = buildTrack(Corridor.of(corridor(context)), durationSec, seed, via)
+        plan: PlannedRun,
+    ): List<Sample> = buildTrack(corridor(context, plan.routeTemplate), plan)
+
+    fun buildTrack(corridor: List<DoubleArray>, plan: PlannedRun): List<Sample> = buildTrack(
+        Corridor.of(corridor),
+        plan.durationSec,
+        plan.seed,
+        waypoints(plan.via),
+        if (plan.routeTemplate == RouteTemplate.EAST_CAMPUS_TRACK) plan.distanceValue * 1000.0 else null,
+    )
 
     fun buildTrack(
         corridor: List<DoubleArray>,
@@ -392,19 +414,23 @@ object RouteEngine {
     /**
      * Build the deterministic simulated track for one run.
      *
-     * Direction and corridor offset come from [seed]; the speed profile, lateral wobble and 2 s
-     * sampling follow §6.2 of the spec. [via] steers the path past the school's checkpoints: each
-     * waypoint bends the centreline smoothly so the track sweeps within [VIA_TARGET_M] of it and
-     * then rejoins the corridor. The same seed and waypoint list always produce the same samples.
+     * An open legacy corridor uses seed-derived direction, start offset and checkpoint steering.
+     * A closed course follows the template direction until [loopDistanceM] with bounded drift.
      */
     fun buildTrack(
         corridor: Corridor,
         durationSec: Int,
         seed: Long,
         via: List<Waypoint> = emptyList(),
+        loopDistanceM: Double? = null,
     ): List<Sample> {
         if (durationSec <= 0) throw StateException("跑步时长必须为正")
         if (corridor.length <= 0.0) throw StateException("走廊长度为零")
+        if (loopDistanceM != null) {
+            if (!loopDistanceM.isFinite() || loopDistanceM <= 0.0 || corridor.length < 4.0 ||
+                !corridor.at(0.0).contentEquals(corridor.at(corridor.length)) || via.isNotEmpty()
+            ) throw StateException("东校区闭环模板、里程或绕行点无效")
+        }
 
         val rng = Random(seed)
         val phaseA = rng.nextDouble() * TWO_PI
@@ -419,7 +445,7 @@ object RouteEngine {
         // back when it would skip a waypoint the track has to sweep past.
         val seedOffset = ((seed ushr 3) % 1000L).toDouble() / 1000.0 * MAX_START_OFFSET_M
         val offset = clampStartOffset(seedOffset, direction, warp, corridor.length)
-        val traversable = (corridor.length - offset).coerceAtLeast(corridor.length * 0.9)
+        val traversable = loopDistanceM ?: (corridor.length - offset).coerceAtLeast(corridor.length * 0.9)
         val duration = durationSec.toDouble()
 
         fun rawSpeed(t: Double): Double {
@@ -431,7 +457,7 @@ object RouteEngine {
             return max(MIN_SPEED, ramp * wobble)
         }
 
-        // 0.1 s trapezoidal integration, scaled so the run covers the remaining corridor once.
+        // 0.1 s trapezoidal integration, scaled to the chosen travel distance.
         val tickCount = durationSec * 10 + 1
         val speeds = DoubleArray(tickCount) { rawSpeed(it * SPEED_STEP) }
         var area = 0.0
@@ -455,14 +481,16 @@ object RouteEngine {
         }
 
         val noise = Random(seed + 1)
-        val count = durationSec / 2 + 1
+        val count = durationSec / 2 + 1 + if (loopDistanceM != null) durationSec % 2 else 0
         val samples = ArrayList<Sample>(count)
         val travelled = DoubleArray(count)
         for (index in 0 until count) {
-            val t = index * ROUTE_DT
+            val t = min(index * ROUTE_DT, duration)
             val distance = travelledAt(t)
             travelled[index] = distance
-            val arc = if (direction > 0) {
+            val arc = if (loopDistanceM != null) {
+                distance % corridor.length
+            } else if (direction > 0) {
                 (offset + distance).coerceAtMost(corridor.length)
             } else {
                 (corridor.length - offset - distance).coerceAtLeast(0.0)
@@ -477,17 +505,23 @@ object RouteEngine {
                 lat += detour[0] / M_PER_DEGREE
                 lng += detour[1] / M_PER_DEGREE / max(0.25, cos(Math.toRadians(base[0])))
             }
-            val side = 1.1 * sin(arc / 41.0 + wobbleA) +
-                0.45 * sin(arc / 9.7 + wobbleB) +
-                noise.nextGaussian() * 0.18
-            val heading = corridor.bearing(arc) + PI / 2.0 + if (direction < 0) PI else 0.0
+            val side = if (loopDistanceM != null) {
+                0.25 * sin(distance / 21.0 + wobbleA) + 0.14 * sin(distance / 8.5 + wobbleB) +
+                    0.06 * sin(distance / 3.5 + phaseA)
+            } else {
+                1.1 * sin(arc / 41.0 + wobbleA) + 0.45 * sin(arc / 9.7 + wobbleB) +
+                    noise.nextGaussian() * 0.18
+            }
+            val heading = if (loopDistanceM != null) corridor.loopBearing(arc) + PI / 2.0
+                else corridor.bearing(arc) + PI / 2.0 + if (direction < 0) PI else 0.0
             lat += side * cos(heading) / M_PER_DEGREE
             lng += side * sin(heading) / M_PER_DEGREE / max(0.25, cos(Math.toRadians(lat)))
-            samples.add(Sample(t, lat, lng, arc))
+            samples.add(Sample(t, lat, lng, if (loopDistanceM != null) distance else arc))
         }
 
         for (index in 0 until count - 1) {
-            samples[index] = samples[index].copy(speed = (travelled[index + 1] - travelled[index]) / ROUTE_DT)
+            val interval = samples[index + 1].t - samples[index].t
+            samples[index] = samples[index].copy(speed = (travelled[index + 1] - travelled[index]) / interval)
         }
         val lastSpeed = if (count > 1) min(samples[count - 2].speed, 1.6) else 1.6
         samples[count - 1] = samples[count - 1].copy(speed = lastSpeed)

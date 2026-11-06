@@ -32,7 +32,7 @@ data class ArtifactBlob(
  * - `sensor`: 1 Hz plain `y9.c` array (`durationSec + 1` rows), compact JSON + `"\n"`.
  * - `screenshot`: 720x1080 PNG rendered by [PngCanvas] without Android graphics.
  *
- * The `Context` overload reads `assets/corridor.json`; the corridor overload is pure Kotlin so the
+ * The `Context` overload reads the saved plan's template; the corridor overload is pure Kotlin so the
  * same generation path is covered by JVM unit tests.
  */
 object RunArtifacts {
@@ -44,7 +44,7 @@ object RunArtifacts {
     private val C_OPTIONS = intArrayOf(338, 352, 366, 407)
 
     fun build(context: Context, plan: PlannedRun, startEpoch: Long): Map<String, ArtifactBlob> =
-        build(RouteEngine.corridor(context), plan, startEpoch)
+        build(RouteEngine.corridor(context, plan.routeTemplate), plan, startEpoch)
 
     /**
      * Build all three artifacts from an explicit corridor polyline (`[lat, lng]` pairs).
@@ -55,12 +55,7 @@ object RunArtifacts {
         if (startEpoch <= 0L) throw StateException("起跑时间戳无效")
         if (plan.durationSec <= 0) throw StateException("跑步时长必须为正")
         if (plan.durationSec + 1 < SENSOR_MIN_ROWS) throw StateException("传感器样本不足 51 条")
-        val track = RouteEngine.buildTrack(
-            corridor,
-            plan.durationSec,
-            plan.seed,
-            RouteEngine.waypoints(plan.via),
-        )
+        val track = RouteEngine.buildTrack(corridor, plan)
         return buildFromTrack(track, plan, startEpoch)
     }
 

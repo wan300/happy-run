@@ -44,6 +44,7 @@ data class Checkpoint(
     val longitude: Double,
     val address: String,
     val index: String,
+    val mandatory: Boolean = false,
 )
 
 /** Local entry cutoff confirmed by the user; an earlier server cutoff remains authoritative. */
@@ -100,28 +101,18 @@ class RunRules(val raw: JSONObject) {
             if (comma <= 0) continue
             val latitude = jingwei.substring(0, comma).trim().toDoubleOrNull() ?: continue
             val longitude = jingwei.substring(comma + 1).trim().toDoubleOrNull() ?: continue
-            if (latitude.isNaN() || longitude.isNaN()) continue
+            val id = item.optString("id")
+            if (id.isBlank() || latitude !in -90.0..90.0 || longitude !in -180.0..180.0) continue
             result.add(
                 Checkpoint(
-                    id = item.optString("id"),
+                    id = id,
                     latitude = latitude,
                     longitude = longitude,
                     address = item.optString("address"),
                     index = item.optString("index"),
+                    mandatory = item.optString("type") == "1",
                 ),
             )
-        }
-        if (result.isEmpty()) {
-            // A capture without the optional filters still carries usable points.
-            for (index in 0 until array.length()) {
-                val item = array.optJSONObject(index) ?: continue
-                val jingwei = item.optString("jingwei")
-                val comma = jingwei.indexOf(',')
-                if (comma <= 0) continue
-                val latitude = jingwei.substring(0, comma).trim().toDoubleOrNull() ?: continue
-                val longitude = jingwei.substring(comma + 1).trim().toDoubleOrNull() ?: continue
-                result.add(Checkpoint(item.optString("id"), latitude, longitude, item.optString("address"), item.optString("index")))
-            }
         }
         result
     }
@@ -247,6 +238,11 @@ data class PlannedVia(
     }
 }
 
+enum class RouteTemplate(val wire: String) {
+    LEGACY_CORRIDOR("legacy_corridor"),
+    EAST_CAMPUS_TRACK("east_campus_track_v1"),
+}
+
 /**
  * Immutable description of one simulated run. Everything except the corridor polyline is fixed
  * here, so the foreground service can rebuild the identical track after a process restart.
@@ -266,12 +262,13 @@ data class PlannedRun(
     val createdAt: Long = RunClock.nowEpoch(),
     /** Checkpoints the track was steered past; empty for plans written before the steering slice. */
     val via: List<PlannedVia> = emptyList(),
+    val routeTemplate: RouteTemplate = RouteTemplate.LEGACY_CORRIDOR,
 ) {
     val pointIds: List<String> get() = points.map { it.id }
     val distanceValue: Double get() = distanceKm.toDouble()
 
     fun toJson(): JSONObject = JSONObject().apply {
-        put("version", 2)
+        put("version", 3)
         put("seed", seed)
         put("duration", durationSec)
         put("distance", distanceKm)
@@ -284,6 +281,7 @@ data class PlannedRun(
         put("rule", rule.toJson())
         put("points", JSONArray().apply { points.forEach { put(it.toJson()) } })
         put("via", JSONArray().apply { via.forEach { put(it.toJson()) } })
+        put("route_template", routeTemplate.wire)
         put("created_at", createdAt)
     }
 
@@ -315,6 +313,9 @@ data class PlannedRun(
                 rule = TimeRule.fromJson(source.optJSONObject("rule") ?: JSONObject()),
                 createdAt = JsonUtil.optLongOrNull(source, "created_at") ?: 0L,
                 via = via,
+                routeTemplate = RouteTemplate.entries.firstOrNull {
+                    it.wire == source.optString("route_template", RouteTemplate.LEGACY_CORRIDOR.wire)
+                } ?: throw StateException("跑步计划使用了未知的轨迹模板"),
             )
         }
 
@@ -332,7 +333,7 @@ data class RunReadiness(
 
 /** Fixed run profile. The values are the parameters already accepted by the server. */
 object RunProfile {
-    const val TARGET_DISTANCE_KM = 2.03
+    const val TARGET_DISTANCE_KM = 2.20
     const val TARGET_PACE_SEC_PER_KM = 365.0
     const val STEPS_PER_KM = 832.5
     const val DEFAULT_STEP_INTERVAL = 60

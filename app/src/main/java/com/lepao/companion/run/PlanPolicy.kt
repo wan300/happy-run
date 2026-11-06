@@ -5,6 +5,8 @@ import com.lepao.companion.core.PlannedRun
 import com.lepao.companion.core.PlannedVia
 import com.lepao.companion.core.RunClock
 import com.lepao.companion.core.RunEntryWindow
+import com.lepao.companion.core.RouteTemplate
+import com.lepao.companion.core.RunProfile
 import com.lepao.companion.core.TimeRule
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -26,7 +28,7 @@ data class TrackPoint(
 )
 
 /** A checkpoint candidate from `beforeRun` (`run_line_info.point_list`). */
-data class GeoPoint(val id: String, val latitude: Double, val longitude: Double)
+data class GeoPoint(val id: String, val latitude: Double, val longitude: Double, val mandatory: Boolean = false)
 
 /**
  * Everything the planner reads out of `beforeRun` plus the moments that must be deterministic.
@@ -47,6 +49,7 @@ data class PlanRequest(
     val checkpoints: List<GeoPoint>,
     val pointNumOnline: Int,
     val seed: Long,
+    val routeTemplate: RouteTemplate = RouteTemplate.LEGACY_CORRIDOR,
 )
 
 data class PlanResult(
@@ -73,12 +76,12 @@ object PlanPolicy {
     data class Pace(val seconds: Double, val adjusted: Boolean, val error: String?)
 
     /**
-     * `clamp(2.03, min+0.01, max-0.01)`, two decimals HALF_UP.
+     * Clamp the profile's target inside the school bounds, then round to two decimals.
      *
      * The epsilon keeps the effective run strictly inside the school interval, exactly like the
      * PC client, so a distance exactly on the boundary can never be rejected server side.
      */
-    fun distance(minKm: Double, maxKm: Double): Distance {
+    fun distance(minKm: Double, maxKm: Double, targetKm: Double = TARGET_DISTANCE_KM): Distance {
         if (!minKm.isFinite() || !maxKm.isFinite()) {
             return Distance(0.0, "0.00", false, "学校里程区间不是有效数值")
         }
@@ -93,13 +96,13 @@ object PlanPolicy {
         if (high < low) {
             return Distance(0.0, "0.00", false, "学校里程区间过窄，无法自动夹取")
         }
-        val clamped = TARGET_DISTANCE_KM.coerceIn(low, high)
+        val clamped = targetKm.coerceIn(low, high)
         val text = BigDecimal(clamped).setScale(2, RoundingMode.HALF_UP).toPlainString()
         val km = text.toDouble()
         if (km < MIN_RULE_DISTANCE_KM) {
             return Distance(km, text, true, "夹取后的里程低于可用下限 0.2 km")
         }
-        return Distance(km, text, km != TARGET_DISTANCE_KM, null)
+        return Distance(km, text, km != targetKm, null)
     }
 
     /** Target 365 s/km, clamped into `[lower+1, upper-1]`; a window narrower than 2 s is invalid. */
@@ -229,6 +232,7 @@ object CheckpointSelector {
         track: List<TrackPoint>,
         durationSec: Int,
         needed: Int,
+        repeated: Boolean = false,
     ): SelectionResult {
         if (needed <= 0) return SelectionResult(emptyList(), emptyList(), null)
         if (track.size < 3) {
@@ -237,30 +241,44 @@ object CheckpointSelector {
         val earliest = EDGE_MARGIN_SEC
         val latest = durationSec - EDGE_MARGIN_SEC
         val candidates = ArrayList<SelectedPoint>()
+        fun addVisit(id: String, sample: TrackPoint?, gap: Double) {
+            if (sample != null && gap <= MAX_GAP_M && sample.t in earliest..latest) {
+                candidates.add(SelectedPoint(id, sample.t, sample.lat, sample.lng, sample.arc, gap))
+            }
+        }
         for (checkpoint in checkpoints) {
             var best: TrackPoint? = null
             var bestGap = Double.MAX_VALUE
             for (sample in track) {
                 val gap = Geo.distanceM(checkpoint.latitude, checkpoint.longitude, sample.lat, sample.lng)
+                if (repeated && (gap > MAX_GAP_M || sample.t !in earliest..latest)) {
+                    addVisit(checkpoint.id, best, bestGap)
+                    best = null
+                    bestGap = Double.MAX_VALUE
+                    continue
+                }
                 if (gap < bestGap) {
                     bestGap = gap
                     best = sample
                 }
             }
-            val sample = best ?: continue
-            if (bestGap > MAX_GAP_M) continue
-            if (sample.t < earliest || sample.t > latest) continue
-            candidates.add(
-                SelectedPoint(checkpoint.id, sample.t, sample.lat, sample.lng, sample.arc, bestGap),
-            )
+            addVisit(checkpoint.id, best, bestGap)
         }
         candidates.sortBy { it.t }
         val chosen = ArrayList<SelectedPoint>()
-        for (candidate in candidates) {
-            if (chosen.isEmpty() || candidate.t - chosen.last().t >= MIN_SPACING_SEC) {
-                chosen.add(candidate)
+        if (repeated) {
+            val mandatory = checkpoints.filter { it.mandatory }.map { it.id }.toSet()
+            for (candidate in candidates) {
+                if (candidate.id in mandatory && compatible(candidate, chosen)) chosen.add(candidate)
             }
-            if (chosen.size == needed) break
+            if (chosen.size < mandatory.size) {
+                val missing = mandatory - chosen.map { it.id }.toSet()
+                return SelectionResult(chosen, emptyList(), "田径场轨迹无法命中必经打卡点：${missing.joinToString("、")}")
+            }
+        }
+        for (candidate in candidates) {
+            if (chosen.size >= needed) break
+            if (compatible(candidate, chosen)) chosen.add(candidate)
         }
         if (chosen.size < needed) {
             return SelectionResult(
@@ -272,8 +290,11 @@ object CheckpointSelector {
         val warnings = chosen
             .filter { it.gapM > WARN_GAP_M }
             .map { "打卡点 ${it.id} 与轨迹最近点偏离 ${round(it.gapM)} m（仍在上限 ${MAX_GAP_M.toInt()} m 内）" }
-        return SelectionResult(chosen, warnings, null)
+        return SelectionResult(chosen.sortedBy { it.t }, warnings, null)
     }
+
+    private fun compatible(candidate: SelectedPoint, chosen: List<SelectedPoint>): Boolean =
+        chosen.none { it.id == candidate.id || abs(it.t - candidate.t) < MIN_SPACING_SEC }
 }
 
 /** The single decision point of the run planner: pure, deterministic and unit testable. */
@@ -281,7 +302,8 @@ object PlanEvaluator {
 
     fun evaluate(
         request: PlanRequest,
-        trackFactory: (durationSec: Int, seed: Long, via: List<GeoPoint>) -> List<TrackPoint>,
+        validateTrack: (List<TrackPoint>) -> String? = { null },
+        trackFactory: (durationSec: Int, seed: Long, via: List<GeoPoint>, distanceKm: Double) -> List<TrackPoint>,
     ): PlanResult {
         val blockers = ArrayList<String>()
         for (flag in request.unsupportedFlags) {
@@ -313,8 +335,13 @@ object PlanEvaluator {
         }
         val rule = matches.single()
 
-        val distance = PlanPolicy.distance(rule.minDistanceKm, rule.maxDistanceKm)
+        val eastCampus = request.routeTemplate == RouteTemplate.EAST_CAMPUS_TRACK
+        val targetDistance = if (eastCampus) RunProfile.TARGET_DISTANCE_KM else PlanPolicy.TARGET_DISTANCE_KM
+        val distance = PlanPolicy.distance(rule.minDistanceKm, rule.maxDistanceKm, targetDistance)
         if (distance.error != null) return blocked(listOf(distance.error))
+        if (eastCampus && abs(distance.km - targetDistance) > 0.020001) {
+            return blocked(listOf("东校区当前时段的里程规则不允许约 2.20 km"))
+        }
         val pace = PlanPolicy.pace(rule.minPaceSecPerKm, rule.maxPaceSecPerKm)
         if (pace.error != null) return blocked(listOf(pace.error))
         val duration = PlanPolicy.durationSeconds(distance.km, pace.seconds)
@@ -332,17 +359,19 @@ object PlanEvaluator {
         // Two passes: the plain corridor track tells us which checkpoints are worth a detour and
         // when they would be reached; the second build bends the path past exactly those points,
         // so the 20 m rule can be met without dragging the whole route across the campus.
-        val baseTrack = trackFactory(duration, request.seed, emptyList())
+        val baseTrack = trackFactory(duration, request.seed, emptyList(), distance.km)
         if (baseTrack.size < 3) return blocked(listOf("生成的轨迹样本不足，无法选择打卡点"))
-        val targets = CheckpointSelector.targets(request.checkpoints, baseTrack, duration, needed)
-        val track = if (targets.isEmpty()) baseTrack else trackFactory(duration, request.seed, targets)
-        val selection = CheckpointSelector.select(request.checkpoints, track, duration, needed)
+        val targets = if (eastCampus) emptyList()
+            else CheckpointSelector.targets(request.checkpoints, baseTrack, duration, needed)
+        val track = if (targets.isEmpty()) baseTrack else trackFactory(duration, request.seed, targets, distance.km)
+        validateTrack(track)?.let { return blocked(listOf(it)) }
+        val selection = CheckpointSelector.select(request.checkpoints, track, duration, needed, repeated = eastCampus)
         if (selection.error != null) return blocked(listOf(selection.error))
 
         val warnings = ArrayList<String>()
         if (distance.adjusted) {
             warnings.add(
-                "目标里程 ${PlanPolicy.TARGET_DISTANCE_KM} km 不在学校区间 " +
+                "目标里程 ${targetDistance} km 不在学校区间 " +
                     "[${rule.minDistanceKm}, ${rule.maxDistanceKm}] 内，已自动调整为 ${distance.text} km",
             )
         }
@@ -380,6 +409,7 @@ object PlanEvaluator {
             via = targets.map { PlannedVia(it.id, it.latitude, it.longitude) },
             rule = rule,
             createdAt = request.nowEpoch,
+            routeTemplate = request.routeTemplate,
         )
         return PlanResult(true, emptyList(), warnings, rule, plan)
     }
