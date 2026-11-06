@@ -1,0 +1,230 @@
+{
+ "identity": {
+  "version": "231",
+  "version_name": "4.3.1",
+  "mobileModel": "ADA-AL00U",
+  "mobileDeviceId": "fixture-device-0001",
+  "mobileOsVersion": "12",
+  "ostype": "1",
+  "student_num": "23301135",
+  "school_id": "12",
+  "uid": "12217924",
+  "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "umid": "fixture-umid-0123456789abcdef"
+ },
+ "timestamp": 1793778542,
+ "nonce": "123456",
+ "time_str": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+ "cases": [
+  {
+   "endpoint": "Run2/beforeRunV260",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+    "sign": "771303912aba9c3589246cec1c2311c4"
+   },
+   "body_b64": "a2V5PVJBNEc5QnNQcXljZzJqJTJGR2hxJTJCTHFsVVM5dFBaTGVnUUtseXhGTEpNZ1VXSkNSVzQ0bTByOE5ibTRPbXNaaSUyQiUyQjhLMmxCQ3phTXpWUiUwQVdQTiUyRjhlJTJGbm5RS0hVRnlpTDR5WiUyRkZpS3RtZFolMkY0eUNVWkZBcmVEaVM2UmpUUGNBQyUyRkhVVGlTY05ROHQlMkJwd1NEZGlSTkh0V29JaFQlMEFsYklwZ3NiSjJBSEJHMUFrJTJGUTVGSWclMkZjeTZjdmllSlNwSW0zdFNOOXE2WmJJNFVqMkxZNlUlMkI0dEpPJTJGWkxPZyUyQjhmdUhCeHJqSlpuUSUwQXFRbTlINmJ6ZGY5NlZDdjI4N0pmQWhoMHUlMkZ0RHM2MlB2MU51YWpMdWtnV2ZXNlN6dk5TUGtib3U4NTVqR1RkRXpqNjZtZUpMazJsOSUwQVk4R25CeWhidExXelE4eGQwZVp6aU9hVVZ1Q0JINlRGayUyQnNXdEptNE90bW5SQVRQYlFLcDhoMmE5akRJZVZZV2czRzFRdyUyQnpiMXBhJTBBV2xDQUp1M2I3ZDNYb0c5RFdSbEkzVVluMUswcE9saXhZdFQyZzV6R0hobEFTTSUyQkRjQ1hwbDVyNVU5SkxPc1klMkJDNXZzTDlXJTJGTiUyQnE0JTBBa09pQ0xtM1U4RyUyRiUyQnQ1bFdqaDVVUkJJbFV6NzhLeG1RVEMlMkZtUkNUSEhXRXlDak96WGdVRGpuOGJiZHNNRlB1V2l6Z24lMkJIT0xjZzg4JTBBbWlMdXVWeE5mN3ZSMGs4bzBjVmdYMG00dkpzdjdxUnloTzFUZXBFVDg3czYlMEE=",
+   "encrypted_plaintext": "{\"lpd3\":\"OAi\\/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\\nXpOegDq2mw==\\n\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"nonce\":\"123456\",\"ostype\":\"1\",\"school_id\":\"12\",\"student_num\":\"23301135\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"771303912aba9c3589246cec1c2311c4\"}"
+  },
+  {
+   "endpoint": "Run/getTimestampV278",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "game_id": "158",
+    "point_ids": "24560,2894",
+    "sign": "c33eb4276f79402936515f8b6d71d658"
+   },
+   "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZnYW1lX2lkPTE1OCZwb2ludF9pZHM9MjQ1NjAlMkMyODk0JnNpZ249YzMzZWI0Mjc2Zjc5NDAyOTM2NTE1ZjhiNmQ3MWQ2NTg="
+  },
+  {
+   "endpoint": "Run/setRunLocationRecord",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "latitude": "39.9518",
+    "longitude": "116.3452",
+    "game_id": "158",
+    "point_ids": "24560,2894",
+    "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+    "sign": "3b7d395805bb956e9a5c401b983a217c"
+   },
+   "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZsYXRpdHVkZT0zOS45NTE4JmxvbmdpdHVkZT0xMTYuMzQ1MiZnYW1lX2lkPTE1OCZwb2ludF9pZHM9MjQ1NjAlMkMyODk0JmxwZDM9T0FpJTJGa2ZGQzZzcUVuWHppZWNzSFNsNld6bDA1YlJ5aEsyNWpuVGtLZk5ud2FSWFdqQjF2NWhpU0lINDlZR25yajdGUWdINnBsdGt3JTBBWHBPZWdEcTJtdyUzRCUzRCUwQSZzaWduPTNiN2QzOTU4MDViYjk1NmU5YTVjNDAxYjk4M2EyMTdj"
+  },
+  {
+   "endpoint": "report/getOssSts",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+    "sign": "771303912aba9c3589246cec1c2311c4"
+   },
+   "body_b64": "a2V5PVJBNEc5QnNQcXljZzJqJTJGR2hxJTJCTHFsVVM5dFBaTGVnUUtseXhGTEpNZ1VXSkNSVzQ0bTByOE5ibTRPbXNaaSUyQiUyQjhLMmxCQ3phTXpWUiUwQVdQTiUyRjhlJTJGbm5RS0hVRnlpTDR5WiUyRkZpS3RtZFolMkY0eUNVWkZBcmVEaVM2UmpUUGNBQyUyRkhVVGlTY05ROHQlMkJwd1NEZGlSTkh0V29JaFQlMEFsYklwZ3NiSjJBSEJHMUFrJTJGUTVGSWclMkZjeTZjdmllSlNwSW0zdFNOOXE2WmJJNFVqMkxZNlUlMkI0dEpPJTJGWkxPZyUyQjhmdUhCeHJqSlpuUSUwQXFRbTlINmJ6ZGY5NlZDdjI4N0pmQWhoMHUlMkZ0RHM2MlB2MU51YWpMdWtnV2ZXNlN6dk5TUGtib3U4NTVqR1RkRXpqNjZtZUpMazJsOSUwQVk4R25CeWhidExXelE4eGQwZVp6aU9hVVZ1Q0JINlRGayUyQnNXdEptNE90bW5SQVRQYlFLcDhoMmE5akRJZVZZV2czRzFRdyUyQnpiMXBhJTBBV2xDQUp1M2I3ZDNYb0c5RFdSbEkzVVluMUswcE9saXhZdFQyZzV6R0hobEFTTSUyQkRjQ1hwbDVyNVU5SkxPc1klMkJDNXZzTDlXJTJGTiUyQnE0JTBBa09pQ0xtM1U4RyUyRiUyQnQ1bFdqaDVVUkJJbFV6NzhLeG1RVEMlMkZtUkNUSEhXRXlDak96WGdVRGpuOGJiZHNNRlB1V2l6Z24lMkJIT0xjZzg4JTBBbWlMdXVWeE5mN3ZSMGs4bzBjVmdYMG00dkpzdjdxUnloTzFUZXBFVDg3czYlMEE=",
+   "encrypted_plaintext": "{\"lpd3\":\"OAi\\/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\\nXpOegDq2mw==\\n\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"nonce\":\"123456\",\"ostype\":\"1\",\"school_id\":\"12\",\"student_num\":\"23301135\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"771303912aba9c3589246cec1c2311c4\"}"
+  },
+  {
+   "endpoint": "Run/stopRunV278",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "term_id": "13281",
+    "game_id": "158",
+    "start_time": "1793778542",
+    "end_time": "1793779283",
+    "used_time": "741",
+    "distance": "2.03",
+    "step_num": "1690",
+    "file_img": "Public/Upload/pic/run_photo_screenshotImage/x.png",
+    "record_file": "Public/Upload/file/run_record/x.txt",
+    "record_img": "",
+    "log_data": "[{\"distance\":0.65,\"latitude\":39.9518,\"longtitude\":116.3452,\"point_id\":24560,\"time\":1793778564}]",
+    "step_info": "{\"interval\":60,\"list\":[1690]}",
+    "run_check_res": "[]",
+    "pass_total": "366",
+    "pass_effective_num": "0",
+    "is_running_area_valid": "1",
+    "ip": "192.168.1.20",
+    "record_str": "a3bec17682dcaa241dcbba4c391a0612",
+    "gee_token": "",
+    "newMobileDeviceId": "",
+    "run_face_verify_id": "1231231231231",
+    "is_timeout_zfb": "0",
+    "lpd3": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "sign": "ddbb3f18297eb1b006ccd693064593c5"
+   },
+   "body_b64": "a2V5PXlUMFAwMjh2WEtGWkpjcW8lMkIlMkZrcnRkQVFOeHdhJTJCVnlsOTVSMkNoRVRyd2FjaGxsM3Y5TmdKZ3B0UDNDM0hXdHBTNk5CZFZscHUlMkJlOSUwQTZYZ3hHVkRZdE1EUmpZY2o5a29Ic293dzlBTHNRcXM1QnY1V3F0NG9vbjFJdnhiZk1Mc1cxTWNvSFczY2lqdWJaWlVvNEVwdWZoUzglMEFyOXZHWUpjVDY1NlVJOTVMQUFMWlNUVCUyRkRycDMxdWJyUTBYVFNRZnUlMkZ2UHM4MFhvZURuZEdZN2FueUpYRmpPTjFXWldNSldQbUtXMiUwQUFLWE1SJTJGcUxSUTcyWGF1cE1jS3k0ZUx0ZVQ0SzNMJTJGNkZTdlZmNTZUZldxR3d2UGhHb2NvdnljWW9RbHFvSUV4bXJ5WXFOODFWQ0FvJTBBMG5FSjdlcEclMkJLbDF5WnRUYjZNRWlSSVBLYURsMkN4MEtwZmVDOE1ZVlVMOGtsQUJJUFU0aUNoVTY1ZTQ5R0VqdFZSQkhyTGF5MjNxJTBBWWtyJTJCdFVkZnlGV3BkbU45bDJiNWtBT1pDWVpVQ2VQQzRGckRsa2RlYmJ0TDMwclR1NHpCTU1xa2tCREx5a3Frb1JYSzYlMkJMTzhKRDElMEFKQ2NkJTJGMEp5dDFMQmpldyUyRnREWUxlYXFnVVZCY3RjMlF3dVJmTFp2d0dZN3h5NzVYdldEdTRXWW44V21jbCUyQk5oZWhYb2kyalllQ1lPJTBBVGE5M0w0VFpNQ1dhcHU3dlc5N2MyUnB3YWtmNXJUNHpabThQdElWSm1Rcnp3YmxmWGt3UFdld1BROHhVdlV0a2h2SWRTRzhManNxSiUwQXVBdENIdHNrN1lrTkIzZExuWmpWVGRRQ3I4ZFE5Zlcza25kYlB3OUVkcDBnbDllSWowTElFa1Zka05lbnVNQ2NNRnBFQUJHZ2hZc3glMEFNSTl2dFJIWmluTk5yV3J2MkRnbyUyQjNiMG54YTJsV2lTaGNnNFFnWnMwQjV1VzBCdmFUUTFoV01VVDJhJTJGV1UyRTNRR2NEa3RpaVoxTCUwQXFlS2VoOVNVVlN2WlJEOHRTTDF6MCUyRjg1cWZhUWlITG03U0RRY3p6cVM0WjZQcEZvQlJ4T1JMTm1vQmpLSXFZUms3bTU1RyUyQnZIaHozJTBBQkJNSFFEcENsZ0hKMEJPWVVqWEZ3dzRPOWlBbjM1JTJGJTJCamhFUUF2SFRxWjVvVGcwRHo5UUIlMkJIQ01nOW05SFl2OTJJeWZkRWZiWUwlMkZ4JTBBejA0WUhMazBHOEdITWxIV3JTQkJmNkVpN0FSOHhTMGl0Qm9aRDUzREd6NSUyRkR6VCUyRkVkMURwWDgyRkY5aSUyRjcwRUo5a1NGejhOSk50diUwQTc0eDlTNzRabGlxSXgwOFlHVjVTYk1TZUZVZWRMbm9yQUg5RXRWalMxeXZZNWYzdGtWY0dSNzlTc3AzS1hkQ1lGTGJqc3V4MURsJTJCMCUwQXVxc2dvJTJGUUI1azAwR3phMmNBNkwlMkZFMERDTHVoZ0lkRTFrUkpDZ1ZKWkZ1WWdKYTZrMzNSS2w2NjZMWEdmRHRYeXl6NzJXdyUyRmNWeU4lMEF2SEFDM1hmJTJCcTl1a1RzU25PRXI2WkNPZSUyRjhWdEN0bWo4cWxUdVQ5bEpIUEVrc3hXTlFmNWRlRyUyQkJMa3E2eUVVcHptc3BNcHNQelI5JTBBRkhJemFkZzF0Z1hTNHYlMkZnYmx6a1UzM09xUGtnam04aTdsa2xiM2VET0N2RG5udyUyRnhKcGlNT0cxRUNEdDElMkI4a3EyMVJnRGE3NWdseiUwQXU2NlQ5NmxPVlpTVUNLajMlMkZpTmx6U1lycmsyOHBjVEVydGhkYjdYdzNzZ1VPc0NLNkVCTFklMkZ6cDNRU3hsNkh1dEh4aTE4JTJCZUdHOFQlMEFCMDFhSjluWHBxSWtmZTZDSWEyanZ3JTJCRDljZTFZNXh6YWZMUzRYZndSWkNwQldHdlQ1b1NVMkhVcnowV2VBJTNEJTNEJTBB",
+   "encrypted_plaintext": "{\"distance\":\"2.03\",\"end_time\":\"1793779283\",\"file_img\":\"Public\\/Upload\\/pic\\/run_photo_screenshotImage\\/x.png\",\"game_id\":\"158\",\"gee_token\":\"\",\"ip\":\"192.168.1.20\",\"is_running_area_valid\":\"1\",\"is_timeout_zfb\":0,\"log_data\":\"[{\\\"distance\\\":0.65,\\\"latitude\\\":39.9518,\\\"longtitude\\\":116.3452,\\\"point_id\\\":24560,\\\"time\\\":1793778564}]\",\"lpd3\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"newMobileDeviceId\":\"\",\"nonce\":\"123456\",\"ostype\":\"1\",\"pass_effective_num\":0,\"pass_total\":366,\"record_file\":\"Public\\/Upload\\/file\\/run_record\\/x.txt\",\"record_img\":\"\",\"record_str\":\"a3bec17682dcaa241dcbba4c391a0612\",\"run_check_res\":\"[]\",\"run_face_verify_id\":\"1231231231231\",\"school_id\":\"12\",\"start_time\":\"1793778542\",\"step_info\":\"{\\\"interval\\\":60,\\\"list\\\":[1690]}\",\"step_num\":\"1690\",\"student_num\":\"23301135\",\"term_id\":\"13281\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"used_time\":\"741\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"ddbb3f18297eb1b006ccd693064593c5\"}"
+  },
+  {
+   "endpoint": "Run2/gyroscope",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "record_id": "259921",
+    "gyroscope_file": "Public/Upload/file/run_gyroscope/x.txt",
+    "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+    "sign": "fea67cb544f8ec19e5cd48215c79a022"
+   },
+   "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZyZWNvcmRfaWQ9MjU5OTIxJmd5cm9zY29wZV9maWxlPVB1YmxpYyUyRlVwbG9hZCUyRmZpbGUlMkZydW5fZ3lyb3Njb3BlJTJGeC50eHQmbHBkMz1PQWklMkZrZkZDNnNxRW5YemllY3NIU2w2V3psMDViUnloSzI1am5Ua0tmTm53YVJYV2pCMXY1aGlTSUg0OVlHbnJqN0ZRZ0g2cGx0a3clMEFYcE9lZ0RxMm13JTNEJTNEJTBBJnNpZ249ZmVhNjdjYjU0NGY4ZWMxOWU1Y2Q0ODIxNWM3OWEwMjI="
+  },
+  {
+   "endpoint": "Run/recordDetailV270",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "record_id": "259921",
+    "sign": "91e5bbfe649328920c6be6ec2bb035ba"
+   },
+   "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZyZWNvcmRfaWQ9MjU5OTIxJnNpZ249OTFlNWJiZmU2NDkzMjg5MjBjNmJlNmVjMmJiMDM1YmE="
+  },
+  {
+   "endpoint": "Login/RefreshToken",
+   "fields": {
+    "version": "231",
+    "version_name": "4.3.1",
+    "mobileModel": "ADA-AL00U",
+    "mobileDeviceId": "fixture-device-0001",
+    "mobileOsVersion": "12",
+    "ostype": "1",
+    "student_num": "23301135",
+    "school_id": "12",
+    "uid": "12217924",
+    "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "timestamp": "1793778542",
+    "nonce": "123456",
+    "access_token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "refresh_token": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+    "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+    "sign": "160028f09743d5b9db4478cda12834db"
+   },
+   "body_b64": "a2V5PUpnb01YRzlqdnFhSDdPJTJGZ2gxeFd2azZHZmNsNEhUV0F2Wkw0OFdwTVN0VTNDZkhzSXlhV2R0ZkVYUFJPanh6dU92YW14bTNjR0xXQSUwQWklMkY1TXZPbHREOUo2bVhCVlFrbXE3YkxoJTJCbFJJcVlQcmlJcDB4YnhtbHRxemowJTJCNjZuNU5HamJHRlpGRGZaM1VGR1h3M3F5MTNJdFclMEE1bFk4JTJCYzVWVWxNbkFScXhmbDdMN1gzTUlMaGR2UlIyS2ZXcEdwMzlyZHVIZyUyRiUyRnBPRnclMkJJUno5Nlc2b0xHdXElMkJrYUwxVmFQcmlraCUwQUwzU1M4bGc1UGRWclRMQ1NLUTZCYTJIcjVaN1drODUlMkZMWG15UFlYRzc0SHBLRHFQQzliYng5SUdCT3NER0JUMmdVR20yUlhrNFlCbiUwQWMwUzFYcmw5Qm5xYnREejhjdklIVTMxQ2xvTUlFcDIxMVk1c2FhOURSaGJ4NW9KQ2VGYkNSZVE5eG93bVU0MTVNam9RZU4wb0xKQkUlMEE4MWtCWWhUMERjbTRCdlQ0UnNMSTExUWc3UHR0NDl4UEVNalJ2QlVKQ0cxRWMlMkZDdjZVcFZ0ekQlMkJzSjZESzZxWkhzNzJwQTVaaVBSdyUwQVVnVmxRdVpBZHMyZ2ZyeDIwb3B4QUZ1bzl1NEdlZGlrNnhJT0hZUFFnU0pXdGZmeWwxJTJGY1BaMnM0U3IxdlE3aHVremZTSVBaeGQ2SSUwQW91SE1LWTU4bDJKZmElMkJqQ01QOEZ0OEZYM24zV016NnpZeEtReElueHUlMkY5N1lCTk9tJTJCVFFFZFZDZThGOGREdHgzNWN4ZHBicXpIR0clMEFTUzBsbUw0a0pNN2glMkZ3dVo5MzBETEZPcU5EUFlZRWlkNWZyVkcwJTJGWjJXcDFkMHhZYTRWNEFuZW9xWEVMckR2dW9WZDElMkZRbFF2OEl5JTBBZlRxRTlxN093bnd6WTVzQjc5dUs0SW83RkhMWVNZeWZobHhMM1dIc0xnJTNEJTNEJTBB",
+   "encrypted_plaintext": "{\"access_token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"lpd3\":\"OAi\\/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\\nXpOegDq2mw==\\n\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"nonce\":\"123456\",\"ostype\":\"1\",\"refresh_token\":\"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\",\"school_id\":\"12\",\"student_num\":\"23301135\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"160028f09743d5b9db4478cda12834db\"}"
+  }
+ ],
+ "record_signature": {
+  "school_id": "12",
+  "uid": "12217924",
+  "time_str": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "expected": "a3bec17682dcaa241dcbba4c391a0612"
+ },
+ "dynamic_value": {
+  "timestamp": "1793778542",
+  "umid": "fixture-umid-0123456789abcdef",
+  "expected": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n"
+ },
+ "mime_b64": {
+  "input": "abc",
+  "expected": "YWJj\n"
+ }
+}

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">步道乐飞</string>
+
+    <!-- 主界面 -->
+    <string name="main_subtitle">本机运行 · 不连接电脑</string>
+    <string name="footer_credit">made by wan300</string>
+
+    <!-- 登录态卡片 -->
+    <string name="card_login_title">登录态</string>
+    <string name="login_status_loading">读取中…</string>
+    <string name="login_status_missing">未获取</string>
+    <string name="login_status_ready">已就绪</string>
+    <string name="login_status_expired">已过期，请重新获取</string>
+    <string name="login_uid">uid：%1$s</string>
+    <string name="login_school">学校：%1$s</string>
+    <string name="login_captured_at">抓取时间：%1$s</string>
+    <string name="login_refresh_days">refresh 剩余 %1$s 天</string>
+    <string name="login_refresh_expired">refresh 有效期已过</string>
+    <string name="login_no_refresh">仅 access_token，到期后需重新登录</string>
+    <string name="login_refresh_unknown">refresh 剩余天数未知</string>
+    <string name="login_refresh_mismatch">刷新令牌与当前 access_token 不匹配，自动续期已停用</string>
+    <string name="login_refreshed_at">最近续期：%1$s</string>
+    <string name="btn_get_login">获取登录态</string>
+    <string name="btn_check_refresh">检查并续期</string>
+    <string name="btn_clear_login">清除登录态</string>
+    <string name="dialog_clear_login_title">清除登录态</string>
+    <string name="dialog_clear_login_message">清除后需要重新打开官方乐跑捕获登录态，是否继续？</string>
+    <string name="dialog_confirm">继续</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="toast_login_cleared">已清除登录态</string>
+    <string name="toast_login_refreshed">登录态已续期</string>
+    <string name="toast_login_no_need">当前登录态有效期内，无需续期</string>
+    <string name="toast_login_no_refresh">仅 access_token，无法自动续期</string>
+    <string name="toast_login_mismatch">刷新令牌与当前登录态不匹配，请重新获取登录态</string>
+    <string name="toast_login_refresh_failed">续期失败：%1$s</string>
+    <string name="toast_operation_failed">操作失败：%1$s</string>
+    <string name="toast_config_refreshed">配置已刷新</string>
+
+    <!-- 跑步配置卡片 -->
+    <string name="card_run_config_title">跑步配置</string>
+    <string name="config_no_session">先获取登录态</string>
+    <string name="config_not_loaded">尚未读取配置，点击“刷新配置”获取当前学校规则。</string>
+    <string name="config_school">学校/跑区：%1$s</string>
+    <string name="config_window">入口时间窗：%1$s–%2$s</string>
+    <string name="config_rule">有效时段规则：%1$s</string>
+    <string name="config_distance_range">里程范围：%1$s–%2$s km</string>
+    <string name="config_pace_range">配速范围：%1$s–%2$s s/km</string>
+    <string name="config_min_log">最少打卡：%1$s</string>
+    <string name="config_points">可打卡点位：%1$s</string>
+    <string name="config_gyro">gyroscope_type：%1$s</string>
+    <string name="config_plan">计划：%1$s km · 约 %2$s · %3$d s/km · %4$d 步 · %5$d 个打卡点</string>
+    <string name="btn_refresh_config">刷新配置</string>
+    <string name="run_bg_hint">开始后状态栏会常驻本应用的跑步通知，请不要划掉该通知或清理后台；首次开始时会请求加入电池优化白名单，请选择允许，否则系统可能在跑步中途结束进程导致上传/提交失败。</string>
+    <string name="btn_start_run">开始跑步</string>
+    <string name="blocking_title">存在未结束会话，禁止开始新跑步</string>
+    <string name="blocking_detail">%1$s · %2$s · 进度 %3$s / %4$s</string>
+    <string name="dialog_start_title">开始跑步</string>
+    <string name="dialog_start_message">将向官方服务写入一条真实跑步记录，是否继续？</string>
+
+    <!-- 会话卡片 -->
+    <string name="card_session_title">当前 / 最近会话</string>
+    <string name="session_none">暂无会话</string>
+    <string name="session_stage">阶段：%1$s</string>
+    <string name="session_progress">进度：%1$s / %2$s</string>
+    <string name="session_distance">里程：%1$s km</string>
+    <string name="session_heartbeat">心跳：%1$d 次</string>
+    <string name="session_record_id">记录号：%1$s</string>
+    <string name="session_value_unknown">—</string>
+    <string name="session_warning_stop">为避免重复提交，已停止自动操作；请回查或人工核对。</string>
+    <string name="session_last_error">最近错误：%1$s</string>
+    <string name="session_checks_title">8 项回查结果</string>
+    <string name="session_checks_pending">尚未回查，点击“重新回查”读取记录详情。</string>
+    <string name="check_uid_matches">账号一致</string>
+    <string name="check_start_time_matches">起跑时间一致</string>
+    <string name="check_game_id_matches">跑区一致</string>
+    <string name="check_record_valid">记录有效</string>
+    <string name="check_distance_matches">里程一致</string>
+    <string name="check_duration_matches">用时一致</string>
+    <string name="check_steps_match">步数一致</string>
+    <string name="check_route_key_matches">轨迹对象一致</string>
+    <string name="session_record_details_title">记录详情</string>
+    <string name="session_record_status">记录状态：%1$s</string>
+    <string name="session_record_distance">里程：%1$s</string>
+    <string name="session_record_time">用时：%1$s</string>
+    <string name="session_record_steps">步数：%1$s</string>
+    <string name="session_record_zone">跑区：%1$s</string>
+    <string name="session_record_detail_missing">尚未回查记录详情</string>
+    <string name="session_note_verified">记录已写入官方服务；学期统计（RunStat/H5）不在本应用校验范围。</string>
+    <string name="session_resume_hint">服务可能已被系统回收；恢复后会从已保存状态继续，不会重复提交。</string>
+    <string name="btn_resume">恢复会话</string>
+    <string name="btn_verify">重新回查</string>
+    <string name="btn_open_official">打开乐跑</string>
+    <string name="toast_resume_requested">已请求恢复会话</string>
+    <string name="toast_resume_failed">启动恢复失败：%1$s</string>
+    <string name="btn_abandon">放弃本次会话（仅本地）</string>
+    <string name="dialog_abandon_title">放弃本次会话？</string>
+    <string name="dialog_abandon_message">此操作只清除本地的阻塞状态，不会发送任何请求，也不会删除服务端记录。请先到官方乐跑核对本次会话是否已经产生记录；若服务端已有记录，放弃后再次跑步可能产生第二条记录。</string>
+    <string name="toast_abandoned">本地会话已标记为放弃；未发送任何请求</string>
+    <string name="toast_no_official_app">未安装官方乐跑</string>
+
+    <!-- 历史记录 -->
+    <string name="card_history_title">历史记录</string>
+    <string name="history_empty">暂无历史记录</string>
+    <string name="history_header">%1$s · %2$s · %3$s km · %4$s</string>
+    <string name="history_no_record">无记录号</string>
+
+    <!-- 运行日志 -->
+    <string name="card_log_title">运行日志</string>
+    <string name="btn_log_expand">展开</string>
+    <string name="btn_log_collapse">收起</string>
+    <string name="btn_copy_log">复制</string>
+    <string name="toast_copied">已复制</string>
+    <string name="log_empty">暂无日志</string>
+
+    <!-- 阶段 -->
+    <string name="stage_new">未开始</string>
+    <string name="stage_prepared">已准备</string>
+    <string name="stage_start_pending">起跑结果待核对</string>
+    <string name="stage_running">跑步中</string>
+    <string name="stage_location_pending">位置上报待核对</string>
+    <string name="stage_uploading">上传中</string>
+    <string name="stage_stop_pending">结束结果待核对</string>
+    <string name="stage_stop_acknowledged">服务端已接受</string>
+    <string name="stage_sensor_pending">传感器登记中</string>
+    <string name="stage_submitted">已提交待回查</string>
+    <string name="stage_verified">回查通过</string>
+    <string name="stage_uncertain">结果不确定</string>
+    <string name="stage_failed">失败</string>
+
+    <!-- 采集页 -->
+    <string name="capture_title">获取登录态</string>
+    <string name="capture_steps">1. 关闭其他 VPN（Clash 等）\n2. 开始采集并允许 VPN 授权\n3. 打开乐跑，必须完成一次完整的登录流程（输入手机号/微信/QQ 授权，直到进入乐跑首页）；如果乐跑当前已是登录状态，请先在「我的 → 设置 → 退出登录」退出，再重新登录一次。只打开已登录的乐跑不会产生登录响应，采不到登录态\n4. 登录成功后进入首页/跑步页停留几秒，再返回本页点「完成并保存」</string>
+    <string name="capture_status">采集状态：%1$s</string>
+    <string name="capture_state_idle">未开始</string>
+    <string name="capture_state_starting">启动中</string>
+    <string name="capture_state_running">采集中</string>
+    <string name="capture_state_login_seen">已捕获登录响应</string>
+    <string name="capture_state_context_ready">登录态可保存</string>
+    <string name="capture_state_error">出错</string>
+    <string name="capture_check_channel">本地采集通道已建立</string>
+    <string name="capture_check_login">已捕获登录响应</string>
+    <string name="capture_check_identity">已捕获设备与账号上下文</string>
+    <string name="capture_check_ready">登录态可保存</string>
+    <string name="capture_endpoints_title">最近接口</string>
+    <string name="capture_endpoints_empty">暂无接口记录</string>
+    <string name="btn_start_capture">开始采集</string>
+    <string name="btn_stop_capture">停止采集</string>
+    <string name="btn_save_capture">完成并保存</string>
+    <string name="toast_capture_started">采集已启动，请打开乐跑登录</string>
+    <string name="toast_capture_stopped">已停止采集</string>
+    <string name="toast_vpn_denied">未授权 VPN，无法采集</string>
+    <string name="toast_capture_failed">启动采集失败：%1$s</string>
+    <string name="toast_save_incomplete">登录态尚不完整，请继续采集</string>
+    <string name="toast_save_success">登录态已保存</string>
+    <string name="toast_save_failed">保存失败：%1$s</string>
+    <string name="dialog_back_title">采集仍在进行</string>
+    <string name="dialog_back_message">是否停止采集并返回？</string>
+    <string name="dialog_back_confirm">停止并返回</string>
+    <string name="dialog_back_cancel">继续采集</string>
+    <string name="capture_error">错误：%1$s</string>
+</resources>

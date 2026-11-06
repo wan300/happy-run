@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand">#266CCE</color>
+    <color name="brand_dark">#174C99</color>
+    <color name="bg">#F5F6F8</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#1B1F24</color>
+    <color name="text_secondary">#5B6470</color>
+    <color name="ok">#2E9E5B</color>
+    <color name="warn">#C98212</color>
+    <color name="danger">#C63D3D</color>
+    <color name="border">#E3E6EA</color>
+    <color name="banner_danger_bg">#FBEAEA</color>
+    <color name="button_disabled">#8FA9D4</color>
+    <color name="button_secondary_bg">#EDF1F7</color>
+    <color name="button_secondary_bg_disabled">#F1F3F6</color>
+    <color name="button_secondary_text">#266CCE</color>
+    <color name="button_secondary_text_disabled">#9AA3AF</color>
+    <color name="ic_launcher_background">#18C183</color>
+</resources>

@@ -1,0 +1,956 @@
+{
+  "meta": {
+    "generated_by": "android/tools/gen_fixtures.py",
+    "reference": "lepao_client/protocol.py",
+    "note": "Synthetic fixture data only; no real account, token, UMID or capture bytes.",
+    "identity": {
+      "version": "231",
+      "version_name": "4.3.1",
+      "mobileModel": "ADA-AL00U",
+      "mobileDeviceId": "fixture-device-0001",
+      "mobileOsVersion": "12",
+      "ostype": "1",
+      "student_num": "23301135",
+      "school_id": "12",
+      "uid": "12217924",
+      "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "umid": "fixture-umid-0123456789abcdef",
+    "timestamp": 1793778542,
+    "nonce": "123456",
+    "formal_start_str": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "requests": [
+    {
+      "name": "beforeRun",
+      "endpoint": "Run2/beforeRunV260",
+      "frames": [
+        "fixture/beforeRun"
+      ],
+      "extra": {},
+      "extra_order": [],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "lpd3",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "771303912aba9c3589246cec1c2311c4"
+      },
+      "body": "key=RA4G9BsPqycg2j%2FGhq%2BLqlUS9tPZLegQKlyxFLJMgUWJCRW44m0r8Nbm4OmsZi%2B%2B8K2lBCzaMzVR%0AWPN%2F8e%2FnnQKHUFyiL4yZ%2FFiKtmdZ%2F4yCUZFAreDiS6RjTPcAC%2FHUTiScNQ8t%2BpwSDdiRNHtWoIhT%0AlbIpgsbJ2AHBG1Ak%2FQ5FIg%2Fcy6cvieJSpIm3tSN9q6ZbI4Uj2LY6U%2B4tJO%2FZLOg%2B8fuHBxrjJZnQ%0AqQm9H6bzdf96VCv287JfAhh0u%2FtDs62Pv1NuajLukgWfW6SzvNSPkbou855jGTdEzj66meJLk2l9%0AY8GnByhbtLWzQ8xd0eZziOaUVuCBH6TFk%2BsWtJm4OtmnRATPbQKp8h2a9jDIeVYWg3G1Qw%2Bzb1pa%0AWlCAJu3b7d3XoG9DWRlI3UYn1K0pOlixYtT2g5zGHhlASM%2BDcCXpl5r5U9JLOsY%2BC5vsL9W%2FN%2Bq4%0AkOiCLm3U8G%2F%2Bt5lWjh5URBIlUz78KxmQTC%2FmRCTHHWEyCjOzXgUDjn8bbdsMFPuWizgn%2BHOLcg88%0AmiLuuVxNf7vR0k8o0cVgX0m4vJsv7qRyhO1TepET87s6%0A",
+      "body_b64": "a2V5PVJBNEc5QnNQcXljZzJqJTJGR2hxJTJCTHFsVVM5dFBaTGVnUUtseXhGTEpNZ1VXSkNSVzQ0bTByOE5ibTRPbXNaaSUyQiUyQjhLMmxCQ3phTXpWUiUwQVdQTiUyRjhlJTJGbm5RS0hVRnlpTDR5WiUyRkZpS3RtZFolMkY0eUNVWkZBcmVEaVM2UmpUUGNBQyUyRkhVVGlTY05ROHQlMkJwd1NEZGlSTkh0V29JaFQlMEFsYklwZ3NiSjJBSEJHMUFrJTJGUTVGSWclMkZjeTZjdmllSlNwSW0zdFNOOXE2WmJJNFVqMkxZNlUlMkI0dEpPJTJGWkxPZyUyQjhmdUhCeHJqSlpuUSUwQXFRbTlINmJ6ZGY5NlZDdjI4N0pmQWhoMHUlMkZ0RHM2MlB2MU51YWpMdWtnV2ZXNlN6dk5TUGtib3U4NTVqR1RkRXpqNjZtZUpMazJsOSUwQVk4R25CeWhidExXelE4eGQwZVp6aU9hVVZ1Q0JINlRGayUyQnNXdEptNE90bW5SQVRQYlFLcDhoMmE5akRJZVZZV2czRzFRdyUyQnpiMXBhJTBBV2xDQUp1M2I3ZDNYb0c5RFdSbEkzVVluMUswcE9saXhZdFQyZzV6R0hobEFTTSUyQkRjQ1hwbDVyNVU5SkxPc1klMkJDNXZzTDlXJTJGTiUyQnE0JTBBa09pQ0xtM1U4RyUyRiUyQnQ1bFdqaDVVUkJJbFV6NzhLeG1RVEMlMkZtUkNUSEhXRXlDak96WGdVRGpuOGJiZHNNRlB1V2l6Z24lMkJIT0xjZzg4JTBBbWlMdXVWeE5mN3ZSMGs4bzBjVmdYMG00dkpzdjdxUnloTzFUZXBFVDg3czYlMEE=",
+      "form": {
+        "key": "RA4G9BsPqycg2j/Ghq+LqlUS9tPZLegQKlyxFLJMgUWJCRW44m0r8Nbm4OmsZi++8K2lBCzaMzVR\nWPN/8e/nnQKHUFyiL4yZ/FiKtmdZ/4yCUZFAreDiS6RjTPcAC/HUTiScNQ8t+pwSDdiRNHtWoIhT\nlbIpgsbJ2AHBG1Ak/Q5FIg/cy6cvieJSpIm3tSN9q6ZbI4Uj2LY6U+4tJO/ZLOg+8fuHBxrjJZnQ\nqQm9H6bzdf96VCv287JfAhh0u/tDs62Pv1NuajLukgWfW6SzvNSPkbou855jGTdEzj66meJLk2l9\nY8GnByhbtLWzQ8xd0eZziOaUVuCBH6TFk+sWtJm4OtmnRATPbQKp8h2a9jDIeVYWg3G1Qw+zb1pa\nWlCAJu3b7d3XoG9DWRlI3UYn1K0pOlixYtT2g5zGHhlASM+DcCXpl5r5U9JLOsY+C5vsL9W/N+q4\nkOiCLm3U8G/+t5lWjh5URBIlUz78KxmQTC/mRCTHHWEyCjOzXgUDjn8bbdsMFPuWizgn+HOLcg88\nmiLuuVxNf7vR0k8o0cVgX0m4vJsv7qRyhO1TepET87s6\n"
+      },
+      "encrypted": true,
+      "encrypted_plaintext": "{\"lpd3\":\"OAi\\/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\\nXpOegDq2mw==\\n\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"nonce\":\"123456\",\"ostype\":\"1\",\"school_id\":\"12\",\"student_num\":\"23301135\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"771303912aba9c3589246cec1c2311c4\"}"
+    },
+    {
+      "name": "start",
+      "endpoint": "Run/getTimestampV278",
+      "frames": [
+        "fixture/start"
+      ],
+      "extra": {
+        "game_id": "158",
+        "point_ids": "24560,2894"
+      },
+      "extra_order": [
+        "game_id",
+        "point_ids"
+      ],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "game_id",
+        "point_ids",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "game_id": "158",
+        "point_ids": "24560,2894",
+        "sign": "c33eb4276f79402936515f8b6d71d658"
+      },
+      "body": "version=231&version_name=4.3.1&mobileModel=ADA-AL00U&mobileDeviceId=fixture-device-0001&mobileOsVersion=12&ostype=1&student_num=23301135&school_id=12&uid=12217924&token=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&timestamp=1793778542&nonce=123456&game_id=158&point_ids=24560%2C2894&sign=c33eb4276f79402936515f8b6d71d658",
+      "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZnYW1lX2lkPTE1OCZwb2ludF9pZHM9MjQ1NjAlMkMyODk0JnNpZ249YzMzZWI0Mjc2Zjc5NDAyOTM2NTE1ZjhiNmQ3MWQ2NTg=",
+      "form": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "game_id": "158",
+        "point_ids": "24560,2894",
+        "sign": "c33eb4276f79402936515f8b6d71d658"
+      },
+      "encrypted": false
+    },
+    {
+      "name": "location",
+      "endpoint": "Run/setRunLocationRecord",
+      "frames": [
+        "fixture/location"
+      ],
+      "extra": {
+        "latitude": "39.9518",
+        "longitude": "116.3452",
+        "game_id": "158",
+        "point_ids": "24560,2894"
+      },
+      "extra_order": [
+        "latitude",
+        "longitude",
+        "game_id",
+        "point_ids"
+      ],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "latitude",
+        "longitude",
+        "game_id",
+        "point_ids",
+        "lpd3",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "latitude": "39.9518",
+        "longitude": "116.3452",
+        "game_id": "158",
+        "point_ids": "24560,2894",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "3b7d395805bb956e9a5c401b983a217c"
+      },
+      "body": "version=231&version_name=4.3.1&mobileModel=ADA-AL00U&mobileDeviceId=fixture-device-0001&mobileOsVersion=12&ostype=1&student_num=23301135&school_id=12&uid=12217924&token=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&timestamp=1793778542&nonce=123456&latitude=39.9518&longitude=116.3452&game_id=158&point_ids=24560%2C2894&lpd3=OAi%2FkfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw%0AXpOegDq2mw%3D%3D%0A&sign=3b7d395805bb956e9a5c401b983a217c",
+      "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZsYXRpdHVkZT0zOS45NTE4JmxvbmdpdHVkZT0xMTYuMzQ1MiZnYW1lX2lkPTE1OCZwb2ludF9pZHM9MjQ1NjAlMkMyODk0JmxwZDM9T0FpJTJGa2ZGQzZzcUVuWHppZWNzSFNsNld6bDA1YlJ5aEsyNWpuVGtLZk5ud2FSWFdqQjF2NWhpU0lINDlZR25yajdGUWdINnBsdGt3JTBBWHBPZWdEcTJtdyUzRCUzRCUwQSZzaWduPTNiN2QzOTU4MDViYjk1NmU5YTVjNDAxYjk4M2EyMTdj",
+      "form": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "latitude": "39.9518",
+        "longitude": "116.3452",
+        "game_id": "158",
+        "point_ids": "24560,2894",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "3b7d395805bb956e9a5c401b983a217c"
+      },
+      "encrypted": false
+    },
+    {
+      "name": "ossSts",
+      "endpoint": "report/getOssSts",
+      "frames": [
+        "fixture/ossSts"
+      ],
+      "extra": {},
+      "extra_order": [],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "lpd3",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "771303912aba9c3589246cec1c2311c4"
+      },
+      "body": "key=RA4G9BsPqycg2j%2FGhq%2BLqlUS9tPZLegQKlyxFLJMgUWJCRW44m0r8Nbm4OmsZi%2B%2B8K2lBCzaMzVR%0AWPN%2F8e%2FnnQKHUFyiL4yZ%2FFiKtmdZ%2F4yCUZFAreDiS6RjTPcAC%2FHUTiScNQ8t%2BpwSDdiRNHtWoIhT%0AlbIpgsbJ2AHBG1Ak%2FQ5FIg%2Fcy6cvieJSpIm3tSN9q6ZbI4Uj2LY6U%2B4tJO%2FZLOg%2B8fuHBxrjJZnQ%0AqQm9H6bzdf96VCv287JfAhh0u%2FtDs62Pv1NuajLukgWfW6SzvNSPkbou855jGTdEzj66meJLk2l9%0AY8GnByhbtLWzQ8xd0eZziOaUVuCBH6TFk%2BsWtJm4OtmnRATPbQKp8h2a9jDIeVYWg3G1Qw%2Bzb1pa%0AWlCAJu3b7d3XoG9DWRlI3UYn1K0pOlixYtT2g5zGHhlASM%2BDcCXpl5r5U9JLOsY%2BC5vsL9W%2FN%2Bq4%0AkOiCLm3U8G%2F%2Bt5lWjh5URBIlUz78KxmQTC%2FmRCTHHWEyCjOzXgUDjn8bbdsMFPuWizgn%2BHOLcg88%0AmiLuuVxNf7vR0k8o0cVgX0m4vJsv7qRyhO1TepET87s6%0A",
+      "body_b64": "a2V5PVJBNEc5QnNQcXljZzJqJTJGR2hxJTJCTHFsVVM5dFBaTGVnUUtseXhGTEpNZ1VXSkNSVzQ0bTByOE5ibTRPbXNaaSUyQiUyQjhLMmxCQ3phTXpWUiUwQVdQTiUyRjhlJTJGbm5RS0hVRnlpTDR5WiUyRkZpS3RtZFolMkY0eUNVWkZBcmVEaVM2UmpUUGNBQyUyRkhVVGlTY05ROHQlMkJwd1NEZGlSTkh0V29JaFQlMEFsYklwZ3NiSjJBSEJHMUFrJTJGUTVGSWclMkZjeTZjdmllSlNwSW0zdFNOOXE2WmJJNFVqMkxZNlUlMkI0dEpPJTJGWkxPZyUyQjhmdUhCeHJqSlpuUSUwQXFRbTlINmJ6ZGY5NlZDdjI4N0pmQWhoMHUlMkZ0RHM2MlB2MU51YWpMdWtnV2ZXNlN6dk5TUGtib3U4NTVqR1RkRXpqNjZtZUpMazJsOSUwQVk4R25CeWhidExXelE4eGQwZVp6aU9hVVZ1Q0JINlRGayUyQnNXdEptNE90bW5SQVRQYlFLcDhoMmE5akRJZVZZV2czRzFRdyUyQnpiMXBhJTBBV2xDQUp1M2I3ZDNYb0c5RFdSbEkzVVluMUswcE9saXhZdFQyZzV6R0hobEFTTSUyQkRjQ1hwbDVyNVU5SkxPc1klMkJDNXZzTDlXJTJGTiUyQnE0JTBBa09pQ0xtM1U4RyUyRiUyQnQ1bFdqaDVVUkJJbFV6NzhLeG1RVEMlMkZtUkNUSEhXRXlDak96WGdVRGpuOGJiZHNNRlB1V2l6Z24lMkJIT0xjZzg4JTBBbWlMdXVWeE5mN3ZSMGs4bzBjVmdYMG00dkpzdjdxUnloTzFUZXBFVDg3czYlMEE=",
+      "form": {
+        "key": "RA4G9BsPqycg2j/Ghq+LqlUS9tPZLegQKlyxFLJMgUWJCRW44m0r8Nbm4OmsZi++8K2lBCzaMzVR\nWPN/8e/nnQKHUFyiL4yZ/FiKtmdZ/4yCUZFAreDiS6RjTPcAC/HUTiScNQ8t+pwSDdiRNHtWoIhT\nlbIpgsbJ2AHBG1Ak/Q5FIg/cy6cvieJSpIm3tSN9q6ZbI4Uj2LY6U+4tJO/ZLOg+8fuHBxrjJZnQ\nqQm9H6bzdf96VCv287JfAhh0u/tDs62Pv1NuajLukgWfW6SzvNSPkbou855jGTdEzj66meJLk2l9\nY8GnByhbtLWzQ8xd0eZziOaUVuCBH6TFk+sWtJm4OtmnRATPbQKp8h2a9jDIeVYWg3G1Qw+zb1pa\nWlCAJu3b7d3XoG9DWRlI3UYn1K0pOlixYtT2g5zGHhlASM+DcCXpl5r5U9JLOsY+C5vsL9W/N+q4\nkOiCLm3U8G/+t5lWjh5URBIlUz78KxmQTC/mRCTHHWEyCjOzXgUDjn8bbdsMFPuWizgn+HOLcg88\nmiLuuVxNf7vR0k8o0cVgX0m4vJsv7qRyhO1TepET87s6\n"
+      },
+      "encrypted": true,
+      "encrypted_plaintext": "{\"lpd3\":\"OAi\\/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\\nXpOegDq2mw==\\n\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"nonce\":\"123456\",\"ostype\":\"1\",\"school_id\":\"12\",\"student_num\":\"23301135\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"771303912aba9c3589246cec1c2311c4\"}"
+    },
+    {
+      "name": "stop",
+      "endpoint": "Run/stopRunV278",
+      "frames": [
+        "fixture/stop"
+      ],
+      "extra": {
+        "oaid": "fixture-oaid-0001",
+        "mac": "02:00:00:00:01:01",
+        "term_id": "2026",
+        "game_id": "158",
+        "start_time": "1793778242",
+        "end_time": "1793778542",
+        "used_time": "300",
+        "distance": "2.03",
+        "step_num": "1690",
+        "file_img": "Public/Upload/file/run_image/2026-11-04/461/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.png",
+        "record_file": "Public/Upload/file/run_route/2026-11-04/461/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt",
+        "record_img": "",
+        "log_data": "[{\"distance\":640.0,\"latitude\":39.9518,\"longtitude\":116.3452,\"point_id\":24560,\"time\":1793778300},{\"distance\":1100.0,\"latitude\":39.9528,\"longtitude\":116.3462,\"point_id\":2894,\"time\":1793778420}]",
+        "step_info": "{\"interval\":60,\"list\":[120,130,140,150,0]}",
+        "run_check_res": "[]",
+        "pass_total": 2,
+        "pass_effective_num": 2,
+        "is_running_area_valid": "1",
+        "ip": "203.0.113.7",
+        "record_str": "a3bec17682dcaa241dcbba4c391a0612",
+        "gee_token": "",
+        "newMobileDeviceId": "",
+        "run_face_verify_id": "1231231231231",
+        "is_timeout_zfb": 0
+      },
+      "extra_order": [
+        "oaid",
+        "mac",
+        "term_id",
+        "game_id",
+        "start_time",
+        "end_time",
+        "used_time",
+        "distance",
+        "step_num",
+        "file_img",
+        "record_file",
+        "record_img",
+        "log_data",
+        "step_info",
+        "run_check_res",
+        "pass_total",
+        "pass_effective_num",
+        "is_running_area_valid",
+        "ip",
+        "record_str",
+        "gee_token",
+        "newMobileDeviceId",
+        "run_face_verify_id",
+        "is_timeout_zfb"
+      ],
+      "time_str": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "oaid",
+        "mac",
+        "term_id",
+        "game_id",
+        "start_time",
+        "end_time",
+        "used_time",
+        "distance",
+        "step_num",
+        "file_img",
+        "record_file",
+        "record_img",
+        "log_data",
+        "step_info",
+        "run_check_res",
+        "pass_total",
+        "pass_effective_num",
+        "is_running_area_valid",
+        "ip",
+        "record_str",
+        "gee_token",
+        "newMobileDeviceId",
+        "run_face_verify_id",
+        "is_timeout_zfb",
+        "lpd3",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "oaid": "fixture-oaid-0001",
+        "mac": "02:00:00:00:01:01",
+        "term_id": "2026",
+        "game_id": "158",
+        "start_time": "1793778242",
+        "end_time": "1793778542",
+        "used_time": "300",
+        "distance": "2.03",
+        "step_num": "1690",
+        "file_img": "Public/Upload/file/run_image/2026-11-04/461/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.png",
+        "record_file": "Public/Upload/file/run_route/2026-11-04/461/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt",
+        "record_img": "",
+        "log_data": "[{\"distance\":640.0,\"latitude\":39.9518,\"longtitude\":116.3452,\"point_id\":24560,\"time\":1793778300},{\"distance\":1100.0,\"latitude\":39.9528,\"longtitude\":116.3462,\"point_id\":2894,\"time\":1793778420}]",
+        "step_info": "{\"interval\":60,\"list\":[120,130,140,150,0]}",
+        "run_check_res": "[]",
+        "pass_total": 2,
+        "pass_effective_num": 2,
+        "is_running_area_valid": "1",
+        "ip": "203.0.113.7",
+        "record_str": "a3bec17682dcaa241dcbba4c391a0612",
+        "gee_token": "",
+        "newMobileDeviceId": "",
+        "run_face_verify_id": "1231231231231",
+        "is_timeout_zfb": 0,
+        "lpd3": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "sign": "2e9ee9b894674f041a2ff91629ac3886"
+      },
+      "body": "key=yT0P028vXKFZJcqo%2B%2FkrtdAQNxwa%2BVyl95R2ChETrwYERdtBN3We0rud0EN4SnZmzl92T%2FNLbxC%2B%0Af75t7scl4wIB%2BHo8uhnf2vIUMo8rSEs%2BPk95ZU%2BNrYkPHq3M2UT5jblNJ0rqdTKCIlPjXSQ%2BGy1I%0AhrBQennstWgyjip23eTVnLDjTb3wk%2BdJweus3w1thcnrmLwbyVJJNUkM2H7o8edUPxA%2FcHB08KbF%0ALQ4%2Bv625NkkfUmZYYkxlJ%2BPH6PLUcPqx0VxDdRJp9zOpLK2TzE5uTYv1aIRkSyukpfdroUDdfSL0%0A%2FhjSdVrHdjH7S722pfq2A07DIpl9dSonxim6pwQXH48JWegwZHlXMgy1PVvrQky78Ikshu6zkm%2F8%0A3PceM%2F4x8DSvfXeqEGNLK7xvA2frhu2nXK5SNXAtOvCbrJzqoJ0FotZtzIX1n4j3OEsL3rxj%2BIp%2B%0A5qkNn4gwYNtSEJhCSFvwfsiPYOyq%2BuYhg51PdIq7fqe90Ziemxo2%2F2%2Foi2g5Y1pT83wQdwwSBs9u%0AnfQVvkkbKOqKU8UrbAy18otPymuO%2B%2BpO4H0iyYsSPb%2FViujLg6RQdXyvTrNa9ap8Yf6jzaij6V9K%0AxehTNsrFF7P0MU946BVpGKpcFJ0IIRjvbFWSg0f7%2FMZwNeXfGWai7t6ZfluhddnJuMiE%2FGN0yoOQ%0AYLUezcVYOqL%2FoqWVe49uOEpd8SmgJnJrkivE%2BjMQvzfHbWRo2zhz3RdnWoil2aW1Q4gzx%2FXom5iB%0AsZarwRZjf56fChXXcKuExDSy7JQmf8JlOvVoovc2cXGv0JjI7NSLl63zgxbbR87vC5xt69WjLPnt%0AqgwA8W1RDuw5OHXA6z2Q0hDvIUBf8Sf2azKsrxIy6z99norXhZhx5wVeQCO%2F3i%2FoCtjH2Q7fvTbr%0AHB3Z%2B1AckYZJY4082qkjwVOQIKUw62aASVKd%2FiZDSPTteraHQYXbjC1nBrZVdos0XyRc8iFhqg7m%0AQ5jzjafPbBO9CNkPsOeIu7dpfo7xobh13ITapHDfb5YwTFg24sSFLG%2BCs%2FUaL0FpMaq%2F%2BvdwQRxR%0AcqxZSaACVKpBUhdrpoIWl8QgleLomD%2FbjaKkNDRY96Fdh78cddqujJkfHpPzyF3hFuyZRYl2TwqW%0A%2BuXWXb47udbdl%2FUx5u2MfA1YqqXH5dFo%2FsKF66baxPNuoGFn1Vv%2BsPgQr0daObLUL26BGMbHCXZD%0AGJckBB%2FgVCvmijhbyU8LM7ukjh%2B4nz5SMh31Mmxk6exMurq%2F9nbH9jFbA7qTnLhLRET796eD2g6o%0ATPH5MqUDsCJQ1pPhPtOvvP5iY4xu1Tkn4kd9fB0SLIHQea3ajgJiy83bLS%2BYgcw%2BIXLSx1enr%2BMC%0AUYx4XXS%2FE6Oolx6tricjf40viVdLAzzqyfgwk%2Baj9Ws%2BVOyLBK8q2czKqWovEx9LT1MZZY%2FMOhts%0AlYSiyquQhHmEiWorFgw2ssEzYluEJPZWQ9amkSG1pz7yAcGfR1TMyR5fO2FBc%2FzdGGxzxms50SBN%0AvxlNfeVpuebgvw3fux8xB5ypAFSVrOuopbNiu0u08jFboITqCUC3DEGXLTdWsfo5N31bK2yL2dKH%0AEjyrHYBGvEHTan6EtojqxX%2Babtv4mCMd4%2BihlxyFhauxqggpMg3HEqwaVAMqtdv0lMvi8uA9C41y%0A%2BuPsOdQfMr%2BhoGGXygmQDKYl3rhP62w36SmHedb97%2FrAXO%2Bm5%2FWxYcyr9sPGsKxTfa1upMvfDN%2B4%0Ar11QvxvZmT5bSGtKwcciI%2FQ%3D%0A",
+      "body_b64": "a2V5PXlUMFAwMjh2WEtGWkpjcW8lMkIlMkZrcnRkQVFOeHdhJTJCVnlsOTVSMkNoRVRyd1lFUmR0Qk4zV2UwcnVkMEVONFNuWm16bDkyVCUyRk5MYnhDJTJCJTBBZjc1dDdzY2w0d0lCJTJCSG84dWhuZjJ2SVVNbzhyU0VzJTJCUGs5NVpVJTJCTnJZa1BIcTNNMlVUNWpibE5KMHJxZFRLQ0lsUGpYU1ElMkJHeTFJJTBBaHJCUWVubnN0V2d5amlwMjNlVFZuTERqVGIzd2slMkJkSndldXMzdzF0aGNucm1Md2J5VkpKTlVrTTJIN284ZWRVUHhBJTJGY0hCMDhLYkYlMEFMUTQlMkJ2NjI1TmtrZlVtWllZa3hsSiUyQlBINlBMVWNQcXgwVnhEZFJKcDl6T3BMSzJUekU1dVRZdjFhSVJrU3l1a3BmZHJvVURkZlNMMCUwQSUyRmhqU2RWckhkakg3UzcyMnBmcTJBMDdESXBsOWRTb254aW02cHdRWEg0OEpXZWd3WkhsWE1neTFQVnZyUWt5NzhJa3NodTZ6a20lMkY4JTBBM1BjZU0lMkY0eDhEU3ZmWGVxRUdOTEs3eHZBMmZyaHUyblhLNVNOWEF0T3ZDYnJKenFvSjBGb3RadHpJWDFuNGozT0VzTDNyeGolMkJJcCUyQiUwQTVxa05uNGd3WU50U0VKaENTRnZ3ZnNpUFlPeXElMkJ1WWhnNTFQZElxN2ZxZTkwWmllbXhvMiUyRjIlMkZvaTJnNVkxcFQ4M3dRZHd3U0JzOXUlMEFuZlFWdmtrYktPcUtVOFVyYkF5MThvdFB5bXVPJTJCJTJCcE80SDBpeVlzU1BiJTJGVml1akxnNlJRZFh5dlRyTmE5YXA4WWY2anphaWo2VjlLJTBBeGVoVE5zckZGN1AwTVU5NDZCVnBHS3BjRkowSUlSanZiRldTZzBmNyUyRk1ad05lWGZHV2FpN3Q2WmZsdWhkZG5KdU1pRSUyRkdOMHlvT1ElMEFZTFVlemNWWU9xTCUyRm9xV1ZlNDl1T0VwZDhTbWdKbkpya2l2RSUyQmpNUXZ6ZkhiV1JvMnpoejNSZG5Xb2lsMmFXMVE0Z3p4JTJGWG9tNWlCJTBBc1phcndSWmpmNTZmQ2hYWGNLdUV4RFN5N0pRbWY4SmxPdlZvb3ZjMmNYR3YwSmpJN05TTGw2M3pneGJiUjg3dkM1eHQ2OVdqTFBudCUwQXFnd0E4VzFSRHV3NU9IWEE2ejJRMGhEdklVQmY4U2YyYXpLc3J4SXk2ejk5bm9yWGhaaHg1d1ZlUUNPJTJGM2klMkZvQ3RqSDJRN2Z2VGJyJTBBSEIzWiUyQjFBY2tZWkpZNDA4MnFrandWT1FJS1V3NjJhQVNWS2QlMkZpWkRTUFR0ZXJhSFFZWGJqQzFuQnJaVmRvczBYeVJjOGlGaHFnN20lMEFRNWp6amFmUGJCTzlDTmtQc09lSXU3ZHBmbzd4b2JoMTNJVGFwSERmYjVZd1RGZzI0c1NGTEclMkJDcyUyRlVhTDBGcE1hcSUyRiUyQnZkd1FSeFIlMEFjcXhaU2FBQ1ZLcEJVaGRycG9JV2w4UWdsZUxvbUQlMkZiamFLa05EUlk5NkZkaDc4Y2RkcXVqSmtmSHBQenlGM2hGdXlaUllsMlR3cVclMEElMkJ1WFdYYjQ3dWRiZGwlMkZVeDV1Mk1mQTFZcXFYSDVkRm8lMkZzS0Y2NmJheFBOdW9HRm4xVnYlMkJzUGdRcjBkYU9iTFVMMjZCR01iSENYWkQlMEFHSmNrQkIlMkZnVkN2bWlqaGJ5VThMTTd1a2poJTJCNG56NVNNaDMxTW14azZleE11cnElMkY5bmJIOWpGYkE3cVRuTGhMUkVUNzk2ZUQyZzZvJTBBVFBINU1xVURzQ0pRMXBQaFB0T3Z2UDVpWTR4dTFUa240a2Q5ZkIwU0xJSFFlYTNhamdKaXk4M2JMUyUyQllnY3clMkJJWExTeDFlbnIlMkJNQyUwQVVZeDRYWFMlMkZFNk9vbHg2dHJpY2pmNDB2aVZkTEF6enF5Zmd3ayUyQmFqOVdzJTJCVk95TEJLOHEyY3pLcVdvdkV4OUxUMU1aWlklMkZNT2h0cyUwQWxZU2l5cXVRaEhtRWlXb3JGZ3cyc3NFellsdUVKUFpXUTlhbWtTRzFwejd5QWNHZlIxVE15UjVmTzJGQmMlMkZ6ZEdHeHp4bXM1MFNCTiUwQXZ4bE5mZVZwdWViZ3Z3M2Z1eDh4QjV5cEFGU1ZyT3VvcGJOaXUwdTA4akZib0lUcUNVQzNERUdYTFRkV3NmbzVOMzFiSzJ5TDJkS0glMEFFanlySFlCR3ZFSFRhbjZFdG9qcXhYJTJCYWJ0djRtQ01kNCUyQmlobHh5RmhhdXhxZ2dwTWczSEVxd2FWQU1xdGR2MGxNdmk4dUE5QzQxeSUwQSUyQnVQc09kUWZNciUyQmhvR0dYeWdtUURLWWwzcmhQNjJ3MzZTbUhlZGI5NyUyRnJBWE8lMkJtNSUyRld4WWN5cjlzUEdzS3hUZmExdXBNdmZETiUyQjQlMEFyMTFRdnh2Wm1UNWJTR3RLd2NjaUklMkZRJTNEJTBB",
+      "form": {
+        "key": "yT0P028vXKFZJcqo+/krtdAQNxwa+Vyl95R2ChETrwYERdtBN3We0rud0EN4SnZmzl92T/NLbxC+\nf75t7scl4wIB+Ho8uhnf2vIUMo8rSEs+Pk95ZU+NrYkPHq3M2UT5jblNJ0rqdTKCIlPjXSQ+Gy1I\nhrBQennstWgyjip23eTVnLDjTb3wk+dJweus3w1thcnrmLwbyVJJNUkM2H7o8edUPxA/cHB08KbF\nLQ4+v625NkkfUmZYYkxlJ+PH6PLUcPqx0VxDdRJp9zOpLK2TzE5uTYv1aIRkSyukpfdroUDdfSL0\n/hjSdVrHdjH7S722pfq2A07DIpl9dSonxim6pwQXH48JWegwZHlXMgy1PVvrQky78Ikshu6zkm/8\n3PceM/4x8DSvfXeqEGNLK7xvA2frhu2nXK5SNXAtOvCbrJzqoJ0FotZtzIX1n4j3OEsL3rxj+Ip+\n5qkNn4gwYNtSEJhCSFvwfsiPYOyq+uYhg51PdIq7fqe90Ziemxo2/2/oi2g5Y1pT83wQdwwSBs9u\nnfQVvkkbKOqKU8UrbAy18otPymuO++pO4H0iyYsSPb/ViujLg6RQdXyvTrNa9ap8Yf6jzaij6V9K\nxehTNsrFF7P0MU946BVpGKpcFJ0IIRjvbFWSg0f7/MZwNeXfGWai7t6ZfluhddnJuMiE/GN0yoOQ\nYLUezcVYOqL/oqWVe49uOEpd8SmgJnJrkivE+jMQvzfHbWRo2zhz3RdnWoil2aW1Q4gzx/Xom5iB\nsZarwRZjf56fChXXcKuExDSy7JQmf8JlOvVoovc2cXGv0JjI7NSLl63zgxbbR87vC5xt69WjLPnt\nqgwA8W1RDuw5OHXA6z2Q0hDvIUBf8Sf2azKsrxIy6z99norXhZhx5wVeQCO/3i/oCtjH2Q7fvTbr\nHB3Z+1AckYZJY4082qkjwVOQIKUw62aASVKd/iZDSPTteraHQYXbjC1nBrZVdos0XyRc8iFhqg7m\nQ5jzjafPbBO9CNkPsOeIu7dpfo7xobh13ITapHDfb5YwTFg24sSFLG+Cs/UaL0FpMaq/+vdwQRxR\ncqxZSaACVKpBUhdrpoIWl8QgleLomD/bjaKkNDRY96Fdh78cddqujJkfHpPzyF3hFuyZRYl2TwqW\n+uXWXb47udbdl/Ux5u2MfA1YqqXH5dFo/sKF66baxPNuoGFn1Vv+sPgQr0daObLUL26BGMbHCXZD\nGJckBB/gVCvmijhbyU8LM7ukjh+4nz5SMh31Mmxk6exMurq/9nbH9jFbA7qTnLhLRET796eD2g6o\nTPH5MqUDsCJQ1pPhPtOvvP5iY4xu1Tkn4kd9fB0SLIHQea3ajgJiy83bLS+Ygcw+IXLSx1enr+MC\nUYx4XXS/E6Oolx6tricjf40viVdLAzzqyfgwk+aj9Ws+VOyLBK8q2czKqWovEx9LT1MZZY/MOhts\nlYSiyquQhHmEiWorFgw2ssEzYluEJPZWQ9amkSG1pz7yAcGfR1TMyR5fO2FBc/zdGGxzxms50SBN\nvxlNfeVpuebgvw3fux8xB5ypAFSVrOuopbNiu0u08jFboITqCUC3DEGXLTdWsfo5N31bK2yL2dKH\nEjyrHYBGvEHTan6EtojqxX+abtv4mCMd4+ihlxyFhauxqggpMg3HEqwaVAMqtdv0lMvi8uA9C41y\n+uPsOdQfMr+hoGGXygmQDKYl3rhP62w36SmHedb97/rAXO+m5/WxYcyr9sPGsKxTfa1upMvfDN+4\nr11QvxvZmT5bSGtKwcciI/Q=\n"
+      },
+      "encrypted": true,
+      "encrypted_plaintext": "{\"distance\":\"2.03\",\"end_time\":\"1793778542\",\"file_img\":\"Public\\/Upload\\/file\\/run_image\\/2026-11-04\\/461\\/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.png\",\"game_id\":\"158\",\"gee_token\":\"\",\"ip\":\"203.0.113.7\",\"is_running_area_valid\":\"1\",\"is_timeout_zfb\":0,\"log_data\":\"[{\\\"distance\\\":640.0,\\\"latitude\\\":39.9518,\\\"longtitude\\\":116.3452,\\\"point_id\\\":24560,\\\"time\\\":1793778300},{\\\"distance\\\":1100.0,\\\"latitude\\\":39.9528,\\\"longtitude\\\":116.3462,\\\"point_id\\\":2894,\\\"time\\\":1793778420}]\",\"lpd3\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\"mac\":\"02:00:00:00:01:01\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"newMobileDeviceId\":\"\",\"nonce\":\"123456\",\"oaid\":\"fixture-oaid-0001\",\"ostype\":\"1\",\"pass_effective_num\":2,\"pass_total\":2,\"record_file\":\"Public\\/Upload\\/file\\/run_route\\/2026-11-04\\/461\\/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt\",\"record_img\":\"\",\"record_str\":\"a3bec17682dcaa241dcbba4c391a0612\",\"run_check_res\":\"[]\",\"run_face_verify_id\":\"1231231231231\",\"school_id\":\"12\",\"start_time\":\"1793778242\",\"step_info\":\"{\\\"interval\\\":60,\\\"list\\\":[120,130,140,150,0]}\",\"step_num\":\"1690\",\"student_num\":\"23301135\",\"term_id\":\"2026\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"used_time\":\"300\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"2e9ee9b894674f041a2ff91629ac3886\"}"
+    },
+    {
+      "name": "gyroscope",
+      "endpoint": "Run2/gyroscope",
+      "frames": [
+        "fixture/gyroscope"
+      ],
+      "extra": {
+        "record_id": "259921",
+        "gyroscope_file": "Public/Upload/file/run_gyroscope/2026-11-04/461/x.txt"
+      },
+      "extra_order": [
+        "record_id",
+        "gyroscope_file"
+      ],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "record_id",
+        "gyroscope_file",
+        "lpd3",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "record_id": "259921",
+        "gyroscope_file": "Public/Upload/file/run_gyroscope/2026-11-04/461/x.txt",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "3e340bf42754598063adeb377547f655"
+      },
+      "body": "version=231&version_name=4.3.1&mobileModel=ADA-AL00U&mobileDeviceId=fixture-device-0001&mobileOsVersion=12&ostype=1&student_num=23301135&school_id=12&uid=12217924&token=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&timestamp=1793778542&nonce=123456&record_id=259921&gyroscope_file=Public%2FUpload%2Ffile%2Frun_gyroscope%2F2026-11-04%2F461%2Fx.txt&lpd3=OAi%2FkfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw%0AXpOegDq2mw%3D%3D%0A&sign=3e340bf42754598063adeb377547f655",
+      "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZyZWNvcmRfaWQ9MjU5OTIxJmd5cm9zY29wZV9maWxlPVB1YmxpYyUyRlVwbG9hZCUyRmZpbGUlMkZydW5fZ3lyb3Njb3BlJTJGMjAyNi0xMS0wNCUyRjQ2MSUyRngudHh0JmxwZDM9T0FpJTJGa2ZGQzZzcUVuWHppZWNzSFNsNld6bDA1YlJ5aEsyNWpuVGtLZk5ud2FSWFdqQjF2NWhpU0lINDlZR25yajdGUWdINnBsdGt3JTBBWHBPZWdEcTJtdyUzRCUzRCUwQSZzaWduPTNlMzQwYmY0Mjc1NDU5ODA2M2FkZWIzNzc1NDdmNjU1",
+      "form": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "record_id": "259921",
+        "gyroscope_file": "Public/Upload/file/run_gyroscope/2026-11-04/461/x.txt",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "3e340bf42754598063adeb377547f655"
+      },
+      "encrypted": false
+    },
+    {
+      "name": "recordDetail",
+      "endpoint": "Run/recordDetailV270",
+      "frames": [
+        "fixture/recordDetail"
+      ],
+      "extra": {
+        "record_id": "259921"
+      },
+      "extra_order": [
+        "record_id"
+      ],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "record_id",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "record_id": "259921",
+        "sign": "91e5bbfe649328920c6be6ec2bb035ba"
+      },
+      "body": "version=231&version_name=4.3.1&mobileModel=ADA-AL00U&mobileDeviceId=fixture-device-0001&mobileOsVersion=12&ostype=1&student_num=23301135&school_id=12&uid=12217924&token=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&timestamp=1793778542&nonce=123456&record_id=259921&sign=91e5bbfe649328920c6be6ec2bb035ba",
+      "body_b64": "dmVyc2lvbj0yMzEmdmVyc2lvbl9uYW1lPTQuMy4xJm1vYmlsZU1vZGVsPUFEQS1BTDAwVSZtb2JpbGVEZXZpY2VJZD1maXh0dXJlLWRldmljZS0wMDAxJm1vYmlsZU9zVmVyc2lvbj0xMiZvc3R5cGU9MSZzdHVkZW50X251bT0yMzMwMTEzNSZzY2hvb2xfaWQ9MTImdWlkPTEyMjE3OTI0JnRva2VuPUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJnRpbWVzdGFtcD0xNzkzNzc4NTQyJm5vbmNlPTEyMzQ1NiZyZWNvcmRfaWQ9MjU5OTIxJnNpZ249OTFlNWJiZmU2NDkzMjg5MjBjNmJlNmVjMmJiMDM1YmE=",
+      "form": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "record_id": "259921",
+        "sign": "91e5bbfe649328920c6be6ec2bb035ba"
+      },
+      "encrypted": false
+    },
+    {
+      "name": "refreshToken",
+      "endpoint": "Login/RefreshToken",
+      "frames": [
+        "fixture/refreshToken"
+      ],
+      "extra": {
+        "access_token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "refresh_token": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      },
+      "extra_order": [
+        "access_token",
+        "refresh_token"
+      ],
+      "time_str": null,
+      "field_order": [
+        "version",
+        "version_name",
+        "mobileModel",
+        "mobileDeviceId",
+        "mobileOsVersion",
+        "ostype",
+        "student_num",
+        "school_id",
+        "uid",
+        "token",
+        "timestamp",
+        "nonce",
+        "access_token",
+        "refresh_token",
+        "lpd3",
+        "sign"
+      ],
+      "fields": {
+        "version": "231",
+        "version_name": "4.3.1",
+        "mobileModel": "ADA-AL00U",
+        "mobileDeviceId": "fixture-device-0001",
+        "mobileOsVersion": "12",
+        "ostype": "1",
+        "student_num": "23301135",
+        "school_id": "12",
+        "uid": "12217924",
+        "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "timestamp": "1793778542",
+        "nonce": "123456",
+        "access_token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "refresh_token": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+        "lpd3": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n",
+        "sign": "160028f09743d5b9db4478cda12834db"
+      },
+      "body": "key=JgoMXG9jvqaH7O%2Fgh1xWvk6Gfcl4HTWAvZL48WpMStU3CfHsIyaWdtfEXPROjxzuOvamxm3cGLWA%0Ai%2F5MvOltD9J6mXBVQkmq7bLh%2BlRIqYPriIp0xbxmltqzj0%2B66n5NGjbGFZFDfZ3UFGXw3qy13ItW%0A5lY8%2Bc5VUlMnARqxfl7L7X3MILhdvRR2KfWpGp39rduHg%2F%2FpOFw%2BIRz96W6oLGuq%2BkaL1VaPrikh%0AL3SS8lg5PdVrTLCSKQ6Ba2Hr5Z7Wk85%2FLXmyPYXG74HpKDqPC9bbx9IGBOsDGBT2gUGm2RXk4YBn%0Ac0S1Xrl9BnqbtDz8cvIHU31CloMIEp211Y5saa9DRhbx5oJCeFbCReQ9xowmU415MjoQeN0oLJBE%0A81kBYhT0Dcm4BvT4RsLI11Qg7Ptt49xPEMjRvBUJCG1Ec%2FCv6UpVtzD%2BsJ6DK6qZHs72pA5ZiPRw%0AUgVlQuZAds2gfrx20opxAFuo9u4Gedik6xIOHYPQgSJWtffyl1%2FcPZ2s4Sr1vQ7hukzfSIPZxd6I%0AouHMKY58l2Jfa%2BjCMP8Ft8FX3n3WMz6zYxKQxInxu%2F97YBNOm%2BTQEdVCe8F8dDtx35cxdpbqzHGG%0ASS0lmL4kJM7h%2FwuZ930DLFOqNDPYYEid5frVG0%2FZ2Wp1d0xYa4V4AneoqXELrDvuoVd1%2FQlQv8Iy%0AfTqE9q7OwnwzY5sB79uK4Io7FHLYSYyfhlxL3WHsLg%3D%3D%0A",
+      "body_b64": "a2V5PUpnb01YRzlqdnFhSDdPJTJGZ2gxeFd2azZHZmNsNEhUV0F2Wkw0OFdwTVN0VTNDZkhzSXlhV2R0ZkVYUFJPanh6dU92YW14bTNjR0xXQSUwQWklMkY1TXZPbHREOUo2bVhCVlFrbXE3YkxoJTJCbFJJcVlQcmlJcDB4YnhtbHRxemowJTJCNjZuNU5HamJHRlpGRGZaM1VGR1h3M3F5MTNJdFclMEE1bFk4JTJCYzVWVWxNbkFScXhmbDdMN1gzTUlMaGR2UlIyS2ZXcEdwMzlyZHVIZyUyRiUyRnBPRnclMkJJUno5Nlc2b0xHdXElMkJrYUwxVmFQcmlraCUwQUwzU1M4bGc1UGRWclRMQ1NLUTZCYTJIcjVaN1drODUlMkZMWG15UFlYRzc0SHBLRHFQQzliYng5SUdCT3NER0JUMmdVR20yUlhrNFlCbiUwQWMwUzFYcmw5Qm5xYnREejhjdklIVTMxQ2xvTUlFcDIxMVk1c2FhOURSaGJ4NW9KQ2VGYkNSZVE5eG93bVU0MTVNam9RZU4wb0xKQkUlMEE4MWtCWWhUMERjbTRCdlQ0UnNMSTExUWc3UHR0NDl4UEVNalJ2QlVKQ0cxRWMlMkZDdjZVcFZ0ekQlMkJzSjZESzZxWkhzNzJwQTVaaVBSdyUwQVVnVmxRdVpBZHMyZ2ZyeDIwb3B4QUZ1bzl1NEdlZGlrNnhJT0hZUFFnU0pXdGZmeWwxJTJGY1BaMnM0U3IxdlE3aHVremZTSVBaeGQ2SSUwQW91SE1LWTU4bDJKZmElMkJqQ01QOEZ0OEZYM24zV016NnpZeEtReElueHUlMkY5N1lCTk9tJTJCVFFFZFZDZThGOGREdHgzNWN4ZHBicXpIR0clMEFTUzBsbUw0a0pNN2glMkZ3dVo5MzBETEZPcU5EUFlZRWlkNWZyVkcwJTJGWjJXcDFkMHhZYTRWNEFuZW9xWEVMckR2dW9WZDElMkZRbFF2OEl5JTBBZlRxRTlxN093bnd6WTVzQjc5dUs0SW83RkhMWVNZeWZobHhMM1dIc0xnJTNEJTNEJTBB",
+      "form": {
+        "key": "JgoMXG9jvqaH7O/gh1xWvk6Gfcl4HTWAvZL48WpMStU3CfHsIyaWdtfEXPROjxzuOvamxm3cGLWA\ni/5MvOltD9J6mXBVQkmq7bLh+lRIqYPriIp0xbxmltqzj0+66n5NGjbGFZFDfZ3UFGXw3qy13ItW\n5lY8+c5VUlMnARqxfl7L7X3MILhdvRR2KfWpGp39rduHg//pOFw+IRz96W6oLGuq+kaL1VaPrikh\nL3SS8lg5PdVrTLCSKQ6Ba2Hr5Z7Wk85/LXmyPYXG74HpKDqPC9bbx9IGBOsDGBT2gUGm2RXk4YBn\nc0S1Xrl9BnqbtDz8cvIHU31CloMIEp211Y5saa9DRhbx5oJCeFbCReQ9xowmU415MjoQeN0oLJBE\n81kBYhT0Dcm4BvT4RsLI11Qg7Ptt49xPEMjRvBUJCG1Ec/Cv6UpVtzD+sJ6DK6qZHs72pA5ZiPRw\nUgVlQuZAds2gfrx20opxAFuo9u4Gedik6xIOHYPQgSJWtffyl1/cPZ2s4Sr1vQ7hukzfSIPZxd6I\nouHMKY58l2Jfa+jCMP8Ft8FX3n3WMz6zYxKQxInxu/97YBNOm+TQEdVCe8F8dDtx35cxdpbqzHGG\nSS0lmL4kJM7h/wuZ930DLFOqNDPYYEid5frVG0/Z2Wp1d0xYa4V4AneoqXELrDvuoVd1/QlQv8Iy\nfTqE9q7OwnwzY5sB79uK4Io7FHLYSYyfhlxL3WHsLg==\n"
+      },
+      "encrypted": true,
+      "encrypted_plaintext": "{\"access_token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"lpd3\":\"OAi\\/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\\nXpOegDq2mw==\\n\",\"mobileDeviceId\":\"fixture-device-0001\",\"mobileModel\":\"ADA-AL00U\",\"mobileOsVersion\":\"12\",\"nonce\":\"123456\",\"ostype\":\"1\",\"refresh_token\":\"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\",\"school_id\":\"12\",\"student_num\":\"23301135\",\"timestamp\":\"1793778542\",\"token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"uid\":\"12217924\",\"version\":\"231\",\"version_name\":\"4.3.1\",\"sign\":\"160028f09743d5b9db4478cda12834db\"}"
+    }
+  ],
+  "responses": {
+    "payload": {
+      "record_id": "259921",
+      "uid": "12217924",
+      "start_time": "1793778242",
+      "game_id": "158",
+      "distance": "2.03",
+      "time": "300",
+      "step_num": "1690",
+      "record_status": "1",
+      "file": "https://lptiyu-data.oss-cn-hangzhou.aliyuncs.com/Public/Upload/file/run_route/2026-11-04/461/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt"
+    },
+    "payload_compact": "{\"record_id\":\"259921\",\"uid\":\"12217924\",\"start_time\":\"1793778242\",\"game_id\":\"158\",\"distance\":\"2.03\",\"time\":\"300\",\"step_num\":\"1690\",\"record_status\":\"1\",\"file\":\"https://lptiyu-data.oss-cn-hangzhou.aliyuncs.com/Public/Upload/file/run_route/2026-11-04/461/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt\"}",
+    "plain": {
+      "status": 1,
+      "msg": "ok",
+      "data": {
+        "record_id": "259921",
+        "uid": "12217924",
+        "start_time": "1793778242",
+        "game_id": "158",
+        "distance": "2.03",
+        "time": "300",
+        "step_num": "1690",
+        "record_status": "1",
+        "file": "https://lptiyu-data.oss-cn-hangzhou.aliyuncs.com/Public/Upload/file/run_route/2026-11-04/461/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt"
+      }
+    },
+    "encrypted": {
+      "status": 1,
+      "msg": "ok",
+      "data": "15NRjMyRmRnm2zetV58VTzSk/8akgXDWBmNkjNR/gnkO9iSyG2vpqOds5J5ZK3uUTDpFllXjkZsS\nQ1+F8G+S8F1muugRZ1OBBQ/HQ0Sm0VSuDsXNg56ABTk5AfqCSg9ZyRRKXyc5NHuCuJTEvnrfLoIh\nUyBiq2KIJle1XytpOt2OcjfRKoQixg+J7BePl/0rLU3qX9FjrpSEBiMH4Z0nHq/WwrUmGFHlTKCV\nVm1XngX2REW+Pp2gJN7n1HXfDvtF/eYFbWnutxe5kMCJIzMij5wed7DTnlyKjhor9P8dHl6nyO40\n6E1Pd85w97Az1afGER+DoOoX7oHN45U2GuLqaZ1NE68pTg/JblpajjEcb7D9VRJWqVXWMsobJAXj\n0TeENGchAqe0G/rSDlYgefgJqA==\n"
+    },
+    "encrypted_data_plaintext": "{\"record_id\":\"259921\",\"uid\":\"12217924\",\"start_time\":\"1793778242\",\"game_id\":\"158\",\"distance\":\"2.03\",\"time\":\"300\",\"step_num\":\"1690\",\"record_status\":\"1\",\"file\":\"https://lptiyu-data.oss-cn-hangzhou.aliyuncs.com/Public/Upload/file/run_route/2026-11-04/461/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.txt\"}",
+    "failure": {
+      "status": 0,
+      "msg": "fixture business failure",
+      "data": {
+        "record_id": "259921"
+      }
+    },
+    "failure_string_status": {
+      "status": "0",
+      "msg": "fixture string status"
+    },
+    "failure_missing_status": {
+      "msg": "fixture envelope without status",
+      "data": null
+    },
+    "undecryptable": {
+      "status": 1,
+      "msg": "ok",
+      "data": "not-a-valid-ciphertext"
+    }
+  },
+  "vectors": {
+    "record_signature": [
+      {
+        "school_id": "12",
+        "uid": "12217924",
+        "time_str": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "expected": "a3bec17682dcaa241dcbba4c391a0612"
+      },
+      {
+        "school_id": "12",
+        "uid": "12217925",
+        "time_str": "00000000000000000000000000000000",
+        "expected": "4645f0104b371a8207680873f5d324cd"
+      },
+      {
+        "school_id": "7",
+        "uid": "1234567890",
+        "time_str": "ffffffffffffffffffffffffffffffff",
+        "expected": "e588dce32eee0515585a9e8b8a076d08"
+      }
+    ],
+    "record_signature_errors": [
+      {
+        "school_id": "12",
+        "uid": "4294967295",
+        "time_str": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "reason": "negative-signed-uid"
+      }
+    ],
+    "dynamic_name": [
+      {
+        "model": "ADA-AL00U",
+        "timestamp": "1793778542",
+        "expected": "lpd3"
+      },
+      {
+        "model": "iPhone 12",
+        "timestamp": "1000000000",
+        "expected": "lpp0"
+      },
+      {
+        "model": "Mi 10",
+        "timestamp": "1234567890",
+        "expected": "lpi4"
+      }
+    ],
+    "dynamic_name_errors": [
+      {
+        "model": "A",
+        "timestamp": "1793778542",
+        "reason": "model-too-short"
+      },
+      {
+        "model": "ADA-AL00U",
+        "timestamp": "12345",
+        "reason": "timestamp-not-10-digits"
+      },
+      {
+        "model": "ADA-AL00U",
+        "timestamp": "17937785a2",
+        "reason": "timestamp-not-numeric"
+      }
+    ],
+    "dynamic_value": [
+      {
+        "timestamp": "1793778542",
+        "umid": "fixture-umid-0123456789abcdef",
+        "expected": "OAi/kfFC6sqEnXziecsHSl6Wzl05bRyhK25jnTkKfNnwaRXWjB1v5hiSIH49YGnrj7FQgH6pltkw\nXpOegDq2mw==\n"
+      },
+      {
+        "timestamp": "1234567890",
+        "umid": "fixture-umid-0123456789abcdef",
+        "expected": "4lGaj0L80WGg1xNet0nvt9YOjC3lhpm7kK2U4mYgia7XRBxyueh30d9nlBN3uWIymUI9fhHtBdko\n6KNDv5UEvA==\n"
+      },
+      {
+        "timestamp": "1000000000",
+        "umid": "fixture-umid-ffffffffffffffff",
+        "expected": "uGZdNOVyRgTRBWUECu94nfmh3OQWdjGqlqLlxZzNhD/FxoAPoDpksepQY3l7551oWKbQRuUtwHVV\nBfIUWNWsKQ==\n"
+      }
+    ],
+    "b64_mime": [
+      {
+        "name": "text-0",
+        "input_utf8": "",
+        "expected": ""
+      },
+      {
+        "name": "text-1",
+        "input_utf8": "a",
+        "expected": "YQ==\n"
+      },
+      {
+        "name": "text-2",
+        "input_utf8": "ab",
+        "expected": "YWI=\n"
+      },
+      {
+        "name": "text-3",
+        "input_utf8": "abc",
+        "expected": "YWJj\n"
+      },
+      {
+        "name": "text-4",
+        "input_utf8": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "expected": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4\n"
+      },
+      {
+        "name": "text-5",
+        "input_utf8": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "expected": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eA==\n"
+      },
+      {
+        "name": "text-6",
+        "input_utf8": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "expected": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHg=\n"
+      },
+      {
+        "name": "text-7",
+        "input_utf8": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "expected": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4\n"
+      },
+      {
+        "name": "text-8",
+        "input_utf8": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "expected": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4\neHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eA==\n"
+      },
+      {
+        "name": "binary-0",
+        "input_hex": "00",
+        "expected": "AA==\n"
+      },
+      {
+        "name": "binary-1",
+        "input_hex": "000102030405060708090a0b0c0d0e0f",
+        "expected": "AAECAwQFBgcICQoLDA0ODw==\n"
+      },
+      {
+        "name": "binary-2",
+        "input_hex": "fffefdfcfbfaf9f8f7f6f5f4f3f2f1f0efeeedecebeae9e8e7e6e5e4e3e2e1e0dfdedddcdbdad9d8d7d6d5d4d3d2d1d0cfcecdcccbcac9c8c7c6c5c4c3c2c1c0bfbebdbcbbbab9b8b7b6b5b4b3b2b1b0afaeadacabaaa9a8a7a6a5a4a3a2a1a09f9e9d9c9b9a999897969594939291908f8e8d8c8b8a898887868584838281807f7e7d7c7b7a797877767574737271706f6e6d6c6b6a696867666564636261605f5e5d5c5b5a595857565554535251504f4e4d4c4b4a494847464544434241403f3e3d3c3b3a393837363534333231302f2e2d2c2b2a292827262524232221201f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100ff",
+        "expected": "//79/Pv6+fj39vX08/Lx8O/u7ezr6uno5+bl5OPi4eDf3t3c29rZ2NfW1dTT0tHQz87NzMvKycjH\nxsXEw8LBwL++vby7urm4t7a1tLOysbCvrq2sq6qpqKempaSjoqGgn56dnJuamZiXlpWUk5KRkI+O\njYyLiomIh4aFhIOCgYB/fn18e3p5eHd2dXRzcnFwb25tbGtqaWhnZmVkY2JhYF9eXVxbWllYV1ZV\nVFNSUVBPTk1MS0pJSEdGRURDQkFAPz49PDs6OTg3NjU0MzIxMC8uLSwrKikoJyYlJCMiISAfHh0c\nGxoZGBcWFRQTEhEQDw4NDAsKCQgHBgUEAwIBAP8=\n"
+      }
+    ],
+    "form_encode": [
+      {
+        "name": "space",
+        "input": [
+          [
+            "q",
+            "a b"
+          ]
+        ],
+        "expected": "q=a+b"
+      },
+      {
+        "name": "reserved",
+        "input": [
+          [
+            "q",
+            "a+b/c=d&e"
+          ]
+        ],
+        "expected": "q=a%2Bb%2Fc%3Dd%26e"
+      },
+      {
+        "name": "unreserved",
+        "input": [
+          [
+            "q",
+            "AZaz09-_.~"
+          ]
+        ],
+        "expected": "q=AZaz09-_.~"
+      },
+      {
+        "name": "newline",
+        "input": [
+          [
+            "q",
+            "line1\nline2"
+          ]
+        ],
+        "expected": "q=line1%0Aline2"
+      },
+      {
+        "name": "chinese",
+        "input": [
+          [
+            "cn",
+            "中文 测试"
+          ]
+        ],
+        "expected": "cn=%E4%B8%AD%E6%96%87+%E6%B5%8B%E8%AF%95"
+      },
+      {
+        "name": "percent",
+        "input": [
+          [
+            "%",
+            "100%"
+          ]
+        ],
+        "expected": "%25=100%25"
+      },
+      {
+        "name": "multiple",
+        "input": [
+          [
+            "a",
+            "1"
+          ],
+          [
+            "b",
+            "2"
+          ]
+        ],
+        "expected": "a=1&b=2"
+      },
+      {
+        "name": "blank",
+        "input": [
+          [
+            "k",
+            ""
+          ]
+        ],
+        "expected": "k="
+      }
+    ],
+    "json_quote": [
+      {
+        "input": "plain",
+        "expected": "\"plain\""
+      },
+      {
+        "input": "slash/x",
+        "expected": "\"slash/x\""
+      },
+      {
+        "input": "a\"b",
+        "expected": "\"a\\\"b\""
+      },
+      {
+        "input": "a\\b",
+        "expected": "\"a\\\\b\""
+      },
+      {
+        "input": "line\nbreak",
+        "expected": "\"line\\nbreak\""
+      },
+      {
+        "input": "tab\there",
+        "expected": "\"tab\\there\""
+      },
+      {
+        "input": "ctrl\u0001",
+        "expected": "\"ctrl\\u0001\""
+      },
+      {
+        "input": "中文",
+        "expected": "\"中文\""
+      },
+      {
+        "input": "",
+        "expected": "\"\""
+      }
+    ],
+    "md5": [
+      {
+        "input": "abc",
+        "expected": "900150983cd24fb0d6963f7d28e17f72"
+      },
+      {
+        "input": "",
+        "expected": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "input": "中文",
+        "expected": "a7bac2239fcdcb3a067903d8077c4a07"
+      }
+    ]
+  }
+}
