@@ -101,8 +101,14 @@ internal object UiText {
             ?: (RunProfile.TARGET_DISTANCE_KM * RunProfile.TARGET_PACE_SEC_PER_KM).roundToInt()
         val steps = plan?.stepNum?.takeIf { it > 0 }
             ?: (RunProfile.TARGET_DISTANCE_KM * RunProfile.STEPS_PER_KM).roundToInt()
-        val points = plan?.passTotal?.takeIf { it > 0 } ?: DEFAULT_CHECKPOINTS
-        val pace = RunProfile.TARGET_PACE_SEC_PER_KM.roundToInt()
+        // `passTotal` is the GPS sample counter, not the check-in count: the card must show the
+        // planned check-in points (`plan.points`), otherwise a normal run displays ~398 "打卡点".
+        val points = plan?.points?.size?.takeIf { it > 0 } ?: DEFAULT_CHECKPOINTS
+        // 高级选项 can change the pace, so derive it from the planned duration instead of showing
+        // the fixed profile constant.
+        val pace = plan?.let { planned ->
+            if (planned.distanceValue > 0) (planned.durationSec / planned.distanceValue).roundToInt() else null
+        } ?: RunProfile.TARGET_PACE_SEC_PER_KM.roundToInt()
         return context.getString(R.string.config_plan, distanceText, clock(duration), pace, steps, points)
     }
 

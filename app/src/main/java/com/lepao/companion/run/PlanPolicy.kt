@@ -6,6 +6,7 @@ import com.lepao.companion.core.PlannedVia
 import com.lepao.companion.core.RunClock
 import com.lepao.companion.core.RunEntryWindow
 import com.lepao.companion.core.RouteTemplate
+import com.lepao.companion.core.RunOptions
 import com.lepao.companion.core.RunProfile
 import com.lepao.companion.core.TimeRule
 import java.math.BigDecimal
@@ -50,6 +51,10 @@ data class PlanRequest(
     val pointNumOnline: Int,
     val seed: Long,
     val routeTemplate: RouteTemplate = RouteTemplate.LEGACY_CORRIDOR,
+    /** 高级选项: custom distance in km, already validated by the UI (null = fixed profile). */
+    val customDistanceKm: Double? = null,
+    /** 高级选项: custom pace in seconds per km, already validated by the UI (null = fixed profile). */
+    val customPaceSecPerKm: Double? = null,
 )
 
 data class PlanResult(
@@ -105,8 +110,12 @@ object PlanPolicy {
         return Distance(km, text, km != targetKm, null)
     }
 
-    /** Target 365 s/km, clamped into `[lower+1, upper-1]`; a window narrower than 2 s is invalid. */
-    fun pace(minPace: Double, maxPace: Double): Pace {
+    /** Target pace (default 365 s/km), clamped into `[lower+1, upper-1]`. */
+    fun pace(
+        minPace: Double,
+        maxPace: Double,
+        targetSecPerKm: Double = TARGET_PACE_SEC_PER_KM,
+    ): Pace {
         if (!minPace.isFinite() || !maxPace.isFinite()) {
             return Pace(0.0, false, "学校配速区间不是有效数值")
         }
@@ -117,8 +126,8 @@ object PlanPolicy {
         if (high < low) {
             return Pace(0.0, false, "学校配速区间过窄，无法自动夹取")
         }
-        val target = TARGET_PACE_SEC_PER_KM.coerceIn(low, high)
-        return Pace(target, target != TARGET_PACE_SEC_PER_KM, null)
+        val target = targetSecPerKm.coerceIn(low, high)
+        return Pace(target, target != targetSecPerKm, null)
     }
 
     fun durationSeconds(distanceKm: Double, paceSecPerKm: Double): Int =
@@ -335,14 +344,54 @@ object PlanEvaluator {
         }
         val rule = matches.single()
 
+        // 高级选项: the UI already bounds the inputs (distance > 1 km, pace 3-9 min/km); the school
+        // rule interval stays authoritative and an explicit value outside it blocks instead of
+        // being silently clamped.
+        val customDistance = request.customDistanceKm
+        if (customDistance != null &&
+            (!customDistance.isFinite() || customDistance <= RunOptions.MIN_DISTANCE_KM)
+        ) {
+            return blocked(listOf("自定义跑步长度必须大于 1.00 km"))
+        }
+        val customPace = request.customPaceSecPerKm
+        if (customPace != null &&
+            (!customPace.isFinite() ||
+                customPace < RunOptions.MIN_PACE_SEC_PER_KM ||
+                customPace > RunOptions.MAX_PACE_SEC_PER_KM)
+        ) {
+            return blocked(listOf("自定义配速需在 3:00–9:00 /km（180–540 s/km）之间"))
+        }
         val eastCampus = request.routeTemplate == RouteTemplate.EAST_CAMPUS_TRACK
-        val targetDistance = if (eastCampus) RunProfile.TARGET_DISTANCE_KM else PlanPolicy.TARGET_DISTANCE_KM
+        val targetDistance = customDistance
+            ?: if (eastCampus) RunProfile.TARGET_DISTANCE_KM else PlanPolicy.TARGET_DISTANCE_KM
+        if (customDistance != null &&
+            (customDistance < rule.minDistanceKm || customDistance > rule.maxDistanceKm)
+        ) {
+            return blocked(
+                listOf(
+                    "自定义跑步长度 ${formatKm(customDistance)} km 不在学校区间 " +
+                        "[${formatKm(rule.minDistanceKm)}–${formatKm(rule.maxDistanceKm)}] km 内",
+                ),
+            )
+        }
         val distance = PlanPolicy.distance(rule.minDistanceKm, rule.maxDistanceKm, targetDistance)
         if (distance.error != null) return blocked(listOf(distance.error))
-        if (eastCampus && abs(distance.km - targetDistance) > 0.020001) {
+        if (eastCampus && customDistance == null && abs(distance.km - targetDistance) > 0.020001) {
             return blocked(listOf("东校区当前时段的里程规则不允许约 2.20 km"))
         }
-        val pace = PlanPolicy.pace(rule.minPaceSecPerKm, rule.maxPaceSecPerKm)
+        if (customPace != null && (customPace < rule.lowerPace || customPace > rule.upperPace)) {
+            return blocked(
+                listOf(
+                    "自定义配速 ${RunOptions.formatPace(customPace)}/km 不在学校区间 " +
+                        "[${RunOptions.formatPace(rule.lowerPace)}–${RunOptions.formatPace(rule.upperPace)}]/km 内",
+                ),
+            )
+        }
+        val pace = PlanPolicy.pace(
+            rule.minPaceSecPerKm,
+            rule.maxPaceSecPerKm,
+            customPace ?: PlanPolicy.TARGET_PACE_SEC_PER_KM,
+        )
         if (pace.error != null) return blocked(listOf(pace.error))
         val duration = PlanPolicy.durationSeconds(distance.km, pace.seconds)
         if (duration < PlanPolicy.MIN_DURATION_SEC) {
@@ -371,11 +420,15 @@ object PlanEvaluator {
         val warnings = ArrayList<String>()
         if (distance.adjusted) {
             warnings.add(
-                "目标里程 ${targetDistance} km 不在学校区间 " +
-                    "[${rule.minDistanceKm}, ${rule.maxDistanceKm}] 内，已自动调整为 ${distance.text} km",
+                if (customDistance != null) {
+                    "自定义跑步长度已按学校区间边界微调为 ${distance.text} km"
+                } else {
+                    "目标里程 $targetDistance km 不在学校区间 " +
+                        "[${rule.minDistanceKm}, ${rule.maxDistanceKm}] 内，已自动调整为 ${distance.text} km"
+                },
             )
         }
-        if (pace.adjusted) {
+        if (pace.adjusted && customPace == null) {
             warnings.add(
                 "目标配速 ${PlanPolicy.TARGET_PACE_SEC_PER_KM.toInt()} s/km 不在学校区间 " +
                     "[${rule.lowerPace}, ${rule.upperPace}] 内，已自动调整为 ${pace.seconds.toInt()} s/km",
@@ -423,4 +476,7 @@ object PlanEvaluator {
         seconds / 3600,
         (seconds % 3600) / 60,
     )
+
+    private fun formatKm(value: Double): String =
+        String.format(java.util.Locale.ROOT, "%.2f", value)
 }

@@ -12,6 +12,7 @@
     <string name="login_status_missing">未获取</string>
     <string name="login_status_ready">已就绪</string>
     <string name="login_status_expired">已过期，请重新获取</string>
+    <string name="login_status_invalidated">已失效，请重新获取登录态</string>
     <string name="login_uid">uid：%1$s</string>
     <string name="login_school">学校：%1$s</string>
     <string name="login_captured_at">抓取时间：%1$s</string>
@@ -53,6 +54,17 @@
     <string name="btn_refresh_config">刷新配置</string>
     <string name="run_bg_hint">开始后状态栏会常驻本应用的跑步通知，请不要划掉该通知或清理后台；首次开始时会请求加入电池优化白名单，请选择允许，否则系统可能在跑步中途结束进程导致上传/提交失败。</string>
     <string name="btn_start_run">开始跑步</string>
+    <string name="btn_advanced_default">高级选项（默认）</string>
+    <string name="btn_advanced_custom">高级选项：%1$s</string>
+    <string name="dialog_advanced_title">高级选项</string>
+    <string name="dialog_advanced_distance">跑步长度（km，必须大于 1.00）</string>
+    <string name="dialog_advanced_distance_hint">例如 3.00</string>
+    <string name="dialog_advanced_pace">配速（分:秒/公里，范围 3:00–9:00）</string>
+    <string name="dialog_advanced_pace_hint">例如 5:30</string>
+    <string name="dialog_advanced_error_distance">跑步长度必须大于 1.00 km</string>
+    <string name="dialog_advanced_error_pace">配速必须在 3:00–9:00 /km 之间</string>
+    <string name="btn_restore_defaults">恢复默认</string>
+    <string name="toast_options_blocked">存在未结束的会话，暂时不能修改高级选项</string>
     <string name="btn_select_east_campus">切换东校区</string>
     <string name="dialog_select_east_campus">将乐跑账号的当前跑区设为北京交通大学东校区。切换后会重新读取跑步规则。</string>
     <string name="blocking_title">存在未结束会话，禁止开始新跑步</string>

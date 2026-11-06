@@ -299,7 +299,12 @@ object Protocol {
         val statusOk = (status is Number && status.toInt() == 1) ||
             (status is String && status.trim() == "1")
         if (!statusOk) {
-            throw ProtocolException("Business response requires handling (status=$status)")
+            val code = when (status) {
+                is Number -> status.toInt()
+                is String -> status.trim().toIntOrNull()
+                else -> null
+            }
+            throw ProtocolException(businessMessage(code), businessStatus = code)
         }
         var data: Any? = envelope.opt("data")
         if (data is String && data.isNotEmpty()) {
@@ -330,5 +335,17 @@ object Protocol {
         } catch (_: Exception) {
             null
         }
+    }
+
+    /**
+     * User-facing Chinese message for the official client's generic business status codes
+     * (`entity/response/Result.java`). Unknown codes keep the raw number for diagnosis.
+     */
+    fun businessMessage(code: Int?): String = when (code) {
+        101 -> "登录失败，请重新获取登录态"
+        102 -> "账号已在其他设备登录，请重新获取登录态"
+        103 -> "登录续期已被禁用，请重新获取登录态"
+        106 -> "账号访问受限，请检查账号状态或联系学校"
+        else -> "业务响应异常（status=$code），请稍后重试"
     }
 }

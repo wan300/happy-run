@@ -54,10 +54,12 @@ object RunController {
         }
         return try {
             val rules = ConfigService.fetch(context, session)
-            AutoPlanner.plan(context, rules, session.identity, RunClock.nowEpoch())
+            AutoPlanner.plan(context, rules, session.identity, RunClock.nowEpoch(), RunOptionStore.load(context))
         } catch (error: LepaoException) {
+            TokenService.invalidateIfRejected(error)
             ReadinessView.blocked(error.message ?: "读取跑步配置失败")
         } catch (error: Exception) {
+            TokenService.invalidateIfRejected(error)
             ReadinessView.blocked("读取跑步配置失败：${error.message}")
         }
     }
@@ -69,10 +71,11 @@ object RunController {
         }
         return try {
             val rules = ConfigService.selectEastCampus(context, session)
-            AutoPlanner.plan(context, rules, session.identity, RunClock.nowEpoch())
+            AutoPlanner.plan(context, rules, session.identity, RunClock.nowEpoch(), RunOptionStore.load(context))
         } catch (_: DeliveryUncertain) {
             ReadinessView.blocked("东校区切换结果待核对，请刷新配置")
         } catch (error: Exception) {
+            TokenService.invalidateIfRejected(error)
             ReadinessView.blocked("切换或核对东校区失败：${error.message}")
         }
     }
@@ -98,6 +101,7 @@ object RunController {
                 warnings.add("登录态自动续期失败：${renewal.reason}")
             }
         } catch (error: Exception) {
+            TokenService.invalidateIfRejected(error)
             warnings.add("登录态自动续期失败：${error.message}")
         }
 
@@ -106,12 +110,13 @@ object RunController {
         } catch (error: DeliveryUncertain) {
             return OperationResult(false, "读取跑步配置结果未知，请稍后重试", RunStore.latest())
         } catch (error: Exception) {
+            TokenService.invalidateIfRejected(error)
             return OperationResult(false, "读取跑步配置失败：${error.message}", RunStore.latest())
         }
 
         val now = RunClock.nowEpoch()
         val readiness = try {
-            AutoPlanner.plan(context, rules, session.identity, now)
+            AutoPlanner.plan(context, rules, session.identity, now, RunOptionStore.load(context))
         } catch (error: Exception) {
             return OperationResult(false, "规划跑步路线失败：${error.message}", RunStore.latest())
         }
@@ -155,6 +160,7 @@ object RunController {
         } catch (error: DeliveryUncertain) {
             return startUncertain(state, "起跑请求结果未知：${error.message}")
         } catch (error: Exception) {
+            TokenService.invalidateIfRejected(error)
             return startUncertain(state, "起跑请求失败：${error.message}")
         }
 
@@ -223,6 +229,7 @@ object RunController {
         val fetched = try {
             DetailReader.fetch(transport, session.identity, recordId, RunClock.nowEpoch())
         } catch (error: Exception) {
+            TokenService.invalidateIfRejected(error)
             return OperationResult(false, "回查失败，记录保持原状态：${error.message}", state)
         } ?: return OperationResult(false, "回查响应不完整，记录保持原状态", state)
 

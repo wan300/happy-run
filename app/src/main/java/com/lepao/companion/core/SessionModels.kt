@@ -96,6 +96,8 @@ class SessionContext(
     var refreshedAt: Long? = null,
     var capturedAt: Long = 0,
     var source: String = "",
+    /** Set when the server rejected the session (e.g. business status 102): the token is dead. */
+    var invalidatedAt: Long? = null,
 ) {
     fun copy(): SessionContext = SessionContext(
         identity = identity.copy(),
@@ -108,6 +110,7 @@ class SessionContext(
         refreshedAt = refreshedAt,
         capturedAt = capturedAt,
         source = source,
+        invalidatedAt = invalidatedAt,
     )
 
     fun cookieHeader(): String = cookies
@@ -171,6 +174,7 @@ class SessionContext(
         put("refreshed_at", refreshedAt ?: JSONObject.NULL)
         put("captured_at", capturedAt)
         put("source", source)
+        put("invalidated_at", invalidatedAt ?: JSONObject.NULL)
     }
 
     companion object {
@@ -202,6 +206,7 @@ class SessionContext(
                 refreshedAt = JsonUtil.optLongOrNull(source, "refreshed_at"),
                 capturedAt = JsonUtil.optLongOrNull(source, "captured_at") ?: 0L,
                 source = source.optString("source"),
+                invalidatedAt = JsonUtil.optLongOrNull(source, "invalidated_at"),
             )
         }
     }
@@ -216,4 +221,6 @@ data class LoginHealth(
     val refreshedAt: Long?,
     val canRefresh: Boolean,
     val refreshTokenMatchesAccessToken: Boolean,
+    /** The server rejected this session (e.g. 102 other-device login); only a new capture helps. */
+    val invalidated: Boolean = false,
 )

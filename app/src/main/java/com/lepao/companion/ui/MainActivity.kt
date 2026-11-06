@@ -16,6 +16,7 @@ import android.os.SystemClock
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -32,6 +33,7 @@ import com.lepao.companion.core.LepaoException
 import com.lepao.companion.core.LoginHealth
 import com.lepao.companion.core.PlannedRun
 import com.lepao.companion.core.ReadinessView
+import com.lepao.companion.core.RunOptions
 import com.lepao.companion.core.RunStage
 import com.lepao.companion.core.RunState
 import com.lepao.companion.core.RunStore
@@ -41,6 +43,8 @@ import com.lepao.companion.core.TokenService
 import com.lepao.companion.run.RunController
 import com.lepao.companion.run.EastCampusZone
 import com.lepao.companion.run.RunForegroundService
+import com.lepao.companion.run.RunOptionStore
+import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.RejectedExecutionException
@@ -89,6 +93,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var warningsText: TextView
     private lateinit var btnInspect: Button
     private lateinit var btnStartRun: Button
+    private lateinit var btnAdvanced: Button
 
     private lateinit var sessionStage: TextView
     private lateinit var sessionProgress: TextView
@@ -205,6 +210,7 @@ class MainActivity : AppCompatActivity() {
         warningsText = findViewById(R.id.warnings_text)
         btnInspect = findViewById(R.id.btn_inspect)
         btnStartRun = findViewById(R.id.btn_start_run)
+        btnAdvanced = findViewById(R.id.btn_advanced)
 
         sessionStage = findViewById(R.id.session_stage)
         sessionProgress = findViewById(R.id.session_progress)
@@ -238,6 +244,7 @@ class MainActivity : AppCompatActivity() {
         btnCheckRefresh.setOnClickListener { checkAndRefreshLogin() }
         btnClearLogin.setOnClickListener { confirmClearLogin() }
         btnInspect.setOnClickListener { refreshConfig() }
+        btnAdvanced.setOnClickListener { showAdvancedOptions() }
         btnStartRun.setOnClickListener {
             if (canSelectEastCampus()) confirmEastCampus() else confirmStartRun()
         }
@@ -375,7 +382,10 @@ class MainActivity : AppCompatActivity() {
         val health = dashboard.health ?: TokenService.health(session)
         val days = health.refreshDaysLeft
         val expired = !health.uidPresent || !health.accessTokenPresent || (days != null && days <= 0.0)
-        if (expired) {
+        if (health.invalidated) {
+            loginStatus.setTextIfChanged(getString(R.string.login_status_invalidated))
+            loginStatus.setTextColor(ContextCompat.getColor(this, R.color.danger))
+        } else if (expired) {
             loginStatus.setTextIfChanged(getString(R.string.login_status_expired))
             loginStatus.setTextColor(ContextCompat.getColor(this, R.color.danger))
         } else {
@@ -496,6 +506,7 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.config_gyro, rules?.gyroscopeType?.takeIf { it.isNotBlank() } ?: unknown),
         )
         planSummary.setTextIfChanged(UiText.planSummary(this, view?.plan))
+        updateAdvancedLabel()
 
         val blockers = view?.blockers.orEmpty()
         if (blockers.isEmpty()) {
@@ -751,6 +762,7 @@ class MainActivity : AppCompatActivity() {
         btnCheckRefresh.isEnabled = !busy && dashboardLoaded && session != null && noBlockingRun
         btnClearLogin.isEnabled = !busy && dashboardLoaded && session != null && noBlockingRun
         btnInspect.isEnabled = !busy && dashboardLoaded && session != null
+        btnAdvanced.isEnabled = !busy && dashboardLoaded && noBlockingRun
         val canSelectEastCampus = canSelectEastCampus()
         btnStartRun.setText(if (canSelectEastCampus) R.string.btn_select_east_campus else R.string.btn_start_run)
         btnStartRun.isEnabled = !busy &&
@@ -862,6 +874,75 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(R.string.dialog_cancel, null)
             .setPositiveButton(R.string.dialog_confirm) { _, _ -> refreshConfig(selectEastCampus = true) }
             .show()
+    }
+
+    /** Reflects the stored 高级选项 on the button, so the current override is visible at a glance. */
+    private fun updateAdvancedLabel() {
+        val options = RunOptionStore.load(this)
+        val parts = ArrayList<String>(2)
+        options.distanceKm?.let { parts += String.format(Locale.ROOT, "%.2f km", it) }
+        options.paceSecPerKm?.let { parts += "${RunOptions.formatPace(it)}/km" }
+        btnAdvanced.setTextIfChanged(
+            if (parts.isEmpty()) {
+                getString(R.string.btn_advanced_default)
+            } else {
+                getString(R.string.btn_advanced_custom, parts.joinToString(" · "))
+            },
+        )
+    }
+
+    /**
+     * 高级选项: custom distance (> 1 km) and pace (3:00-9:00 /km). The school's own rule interval
+     * still applies; the planner blocks with an explicit reason when the two disagree.
+     */
+    private fun showAdvancedOptions() {
+        if (dashboard.blocking != null) {
+            toast(getString(R.string.toast_options_blocked))
+            return
+        }
+        val content = layoutInflater.inflate(R.layout.dialog_run_options, null)
+        val distanceInput = content.findViewById<EditText>(R.id.advanced_distance)
+        val paceInput = content.findViewById<EditText>(R.id.advanced_pace)
+        val errorText = content.findViewById<TextView>(R.id.advanced_error)
+        val options = RunOptionStore.load(this)
+        distanceInput.setText(
+            options.distanceKm?.let { String.format(Locale.ROOT, "%.2f", it) } ?: "",
+        )
+        paceInput.setText(options.paceSecPerKm?.let { RunOptions.formatPace(it) } ?: "")
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_advanced_title)
+            .setView(content)
+            .setPositiveButton(R.string.dialog_confirm, null)
+            .setNeutralButton(R.string.btn_restore_defaults, null)
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val distanceText = distanceInput.text.toString().trim()
+                val paceText = paceInput.text.toString().trim()
+                val distance = if (distanceText.isEmpty()) null else RunOptions.parseDistance(distanceText)
+                if (distanceText.isNotEmpty() && distance == null) {
+                    errorText.setText(R.string.dialog_advanced_error_distance)
+                    errorText.visibility = View.VISIBLE
+                    return@setOnClickListener
+                }
+                val pace = if (paceText.isEmpty()) null else RunOptions.parsePace(paceText)
+                if (paceText.isNotEmpty() && pace == null) {
+                    errorText.setText(R.string.dialog_advanced_error_pace)
+                    errorText.visibility = View.VISIBLE
+                    return@setOnClickListener
+                }
+                RunOptionStore.save(this, RunOptions(distance, pace))
+                dialog.dismiss()
+                refreshConfig()
+            }
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+                RunOptionStore.clear(this)
+                dialog.dismiss()
+                refreshConfig()
+            }
+        }
+        dialog.show()
     }
 
     private fun confirmStartRun() {

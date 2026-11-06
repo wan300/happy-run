@@ -248,6 +248,14 @@
                 android:textColor="@color/brand"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/btn_advanced"
+                style="@style/Widget.Lepao.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_advanced_default" />
+
             <TextView
                 android:id="@+id/blockers_text"
                 android:layout_width="match_parent"

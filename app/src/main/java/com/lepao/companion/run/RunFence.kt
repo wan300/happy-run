@@ -66,8 +66,10 @@ internal class RunFence private constructor(
             val points = (0 until array.length()).map { index ->
                 val pair = array.optString(index).split(',')
                 if (pair.size != 2) return null
-                val lat = pair[0].trim().toDoubleOrNull() ?: return null
-                val lng = pair[1].trim().toDoubleOrNull() ?: return null
+                // The server serialises each vertex as "lng,lat" (e.g. "116.3322770000,39.9557620000"),
+                // not the "lat,lng" the field name suggests.
+                val lng = pair[0].trim().toDoubleOrNull() ?: return null
+                val lat = pair[1].trim().toDoubleOrNull() ?: return null
                 if (lat !in -90.0..90.0 || lng !in -180.0..180.0) return null
                 Point(lng, lat)
             }

@@ -32,7 +32,8 @@ cd android
 - **登录态**：本地 VPN 只放行官方乐跑，通过 VPN 的 HTTP 代理 → 本地 CONNECT 代理 → 自签证书终止 TLS，解析登录响应与一条成功业务请求，得到 `access_token/refresh_token`、身份字段、UMID、Cookie、UA。官方应用在 PC 实测接受未安装的新 CA，故无需改系统证书。
 - **存储**：AES-256-GCM + Android Keystore，临时文件 + fsync + 原子替换；审计日志逐行加密。应用重启后恢复会话与未完成状态。
 - **协议**：`core/Protocol.kt` 是 PC `lepao_client/protocol.py` 的逐字节移植（MD5 签名、AES-CBC、Android 式 JSON 斜杠转义、MIME Base64、动态字段、记录签名），由 Python 生成的黄金夹具做 JVM 对拍。
-- **东校区轨迹**：从西侧直道出发，逆时针沿卫星影像描绘的闭环跑道累计到 2.20 km。轨迹横向偏移最多 0.45 m。学校里程区间最多调整目标 20 m，配速按时段规则夹取。打卡点可在不同圈匹配，必经点和启用的围栏必须校验通过。保存的旧会话使用原走廊重建。
+- **东校区轨迹**：从西侧直道出发，逆时针沿卫星影像描绘的闭环跑道累计到目标里程（默认 2.20 km）。轨迹横向偏移最多 0.45 m。学校里程/配速区间为最终约束，显式输入超出区间时直接 blocker。打卡点可在不同圈匹配，必经点和启用的围栏必须校验通过。保存的旧会话使用原走廊重建。
+- **高级选项**：首页「高级选项」可自定义跑步长度（必须大于 1.00 km）与配速（3:00–9:00 /km）；留空表示使用默认值。设置保存在本机，刷新配置后按新值重新规划；圈数由“里程 ÷ 跑道周长”自动计算。
 - **状态机**：`new → prepared → start_pending → running → uploading → stop_pending → stop_acknowledged → sensor_pending → submitted → verified`。所有写请求先落盘；超时/未知结果进入 `uncertain` 并禁止自动重发。
 - **回查**：REST 只读 `Run/recordDetailV270`，核对账号、起跑时间、跑区、`record_status`、里程、用时、步数、轨迹对象键。学期统计（RunStat/H5）不在本应用校验范围，界面单独标注。
 

@@ -29,7 +29,22 @@ object TokenService {
             refreshedAt = session.refreshedAt,
             canRefresh = !session.refreshToken.isNullOrBlank(),
             refreshTokenMatchesAccessToken = matches,
+            invalidated = session.invalidatedAt != null,
         )
+    }
+
+    /** 102 `OTHER_DEVICE_HAS_LOGINED`: the server kicked this session; only a new capture helps. */
+    const val STATUS_OTHER_DEVICE_LOGIN = 102
+
+    /**
+     * Persist the rejected-session flag when [error] is an "another device logged in" rejection.
+     * Returns true when the login state was invalidated, so callers can adjust their message.
+     */
+    fun invalidateIfRejected(error: Throwable): Boolean {
+        val protocol = error as? ProtocolException ?: return false
+        if (protocol.businessStatus != STATUS_OTHER_DEVICE_LOGIN) return false
+        SessionStore.markInvalidated()
+        return true
     }
 
     fun buildRefreshRequest(
@@ -116,6 +131,7 @@ object TokenService {
             AutoRefreshOutcome(true, true, "rotated", updated)
         } catch (error: Exception) {
             DiagLog.warn("login refresh failed: ${error.javaClass.simpleName}")
+            invalidateIfRejected(error)
             AutoRefreshOutcome(true, false, "refresh failed: ${error.message}", session)
         }
     }

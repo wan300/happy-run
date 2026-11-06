@@ -4,7 +4,12 @@ package com.lepao.companion.core
 open class LepaoException(message: String, cause: Throwable? = null) : Exception(message, cause)
 
 /** A wire contract or a business result that needs explicit handling. */
-class ProtocolException(message: String, cause: Throwable? = null) : LepaoException(message, cause)
+class ProtocolException(
+    message: String,
+    cause: Throwable? = null,
+    /** Non-null when the server answered with a non-success business status code. */
+    val businessStatus: Int? = null,
+) : LepaoException(message, cause)
 
 /** The peer may have processed a request whose outcome was never received. */
 class DeliveryUncertain(message: String, cause: Throwable? = null) : LepaoException(message, cause)

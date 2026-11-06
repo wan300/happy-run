@@ -38,6 +38,17 @@ object SessionStore {
     }
 
     fun exists(): Boolean = file().isFile
+
+    /**
+     * Persist that the server rejected the current session (business status 102). The login card
+     * then shows 已失效 until a fresh capture replaces the context; the flag is cleared by
+     * [save] because every new session starts with `invalidatedAt = null`.
+     */
+    fun markInvalidated(now: Long = RunClock.nowEpoch()) {
+        val session = load() ?: return
+        session.invalidatedAt = now
+        save(session)
+    }
 }
 
 /** The campus-run day is always evaluated in China Standard Time, independent of the phone zone. */

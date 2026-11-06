@@ -5,6 +5,7 @@ import com.lepao.companion.core.Endpoints
 import com.lepao.companion.core.PlannedRun
 import com.lepao.companion.core.Protocol
 import com.lepao.companion.core.RouteTemplate
+import com.lepao.companion.core.RunOptions
 import com.lepao.companion.core.RunRules
 import org.json.JSONArray
 import org.json.JSONObject
@@ -121,13 +122,116 @@ class EastCampusTest {
         assertEquals(listOf("1", "2"), result.plan?.pointIds)
     }
 
+    private fun eastRequest(
+        customDistanceKm: Double? = null,
+        customPaceSecPerKm: Double? = null,
+    ): PlanRequest {
+        val first = loop.at(100.0)
+        val second = loop.at(200.0)
+        return PlanRequest(
+            nowEpoch = RunFixtures.START_EPOCH,
+            schoolId = "12",
+            identitySchoolId = "12",
+            configBlockers = emptyList(),
+            unsupportedFlags = emptyList(),
+            weekTime = (0..6).map(Int::toString).toSet(),
+            runStartTime = 0,
+            runEndTime = 86400,
+            timeRules = listOf(RunFixtures.RULE),
+            checkpoints = listOf(GeoPoint("1", first[0], first[1]), GeoPoint("2", second[0], second[1])),
+            pointNumOnline = 2,
+            seed = 42,
+            routeTemplate = RouteTemplate.EAST_CAMPUS_TRACK,
+            customDistanceKm = customDistanceKm,
+            customPaceSecPerKm = customPaceSecPerKm,
+        )
+    }
+
+    private fun buildLoopTrack(duration: Int, seed: Long, km: Double): List<TrackPoint> =
+        RouteEngine.buildTrack(loop, duration, seed, loopDistanceM = km * 1000)
+            .map { TrackPoint(it.t, it.lat, it.lng, it.arc) }
+
+    @Test
+    fun advancedOptionsChooseDistanceAndPace() {
+        var loopKm = 0.0
+        var trackLength = 0.0
+        val result = PlanEvaluator.evaluate(eastRequest(customDistanceKm = 2.5, customPaceSecPerKm = 330.0)) {
+                duration, seed, _, km ->
+            loopKm = km
+            buildLoopTrack(duration, seed, km).also { track -> trackLength = track.lastOrNull()?.arc ?: 0.0 }
+        }
+
+        assertTrue(result.blockers.toString(), result.ok)
+        assertEquals("2.50", result.plan?.distanceKm)
+        assertEquals(825, result.plan?.durationSec)
+        assertEquals(2.5, loopKm, 0.0)
+        assertEquals(2500.0, trackLength, 0.001)
+        assertEquals(2, result.plan?.points?.size)
+        assertEquals(RouteTemplate.EAST_CAMPUS_TRACK, result.plan?.routeTemplate)
+    }
+
+    @Test
+    fun advancedDistanceMustExceedOneKilometre() {
+        val result = PlanEvaluator.evaluate(eastRequest(customDistanceKm = 1.0)) { duration, seed, _, km ->
+            buildLoopTrack(duration, seed, km)
+        }
+
+        assertFalse(result.ok)
+        assertTrue(result.blockers.any { it.contains("必须大于 1.00 km") })
+    }
+
+    @Test
+    fun advancedDistanceOutsideTheSchoolRangeBlocks() {
+        val result = PlanEvaluator.evaluate(eastRequest(customDistanceKm = 3.5)) { duration, seed, _, km ->
+            buildLoopTrack(duration, seed, km)
+        }
+
+        assertFalse(result.ok)
+        assertTrue(result.blockers.any { it.contains("不在学校区间") })
+    }
+
+    @Test
+    fun advancedPaceOutsideThreeToNineMinutesBlocks() {
+        val result = PlanEvaluator.evaluate(eastRequest(customPaceSecPerKm = 170.0)) { duration, seed, _, km ->
+            buildLoopTrack(duration, seed, km)
+        }
+
+        assertFalse(result.ok)
+        assertTrue(result.blockers.any { it.contains("3:00–9:00") })
+    }
+
+    @Test
+    fun advancedPaceOutsideTheSchoolRangeBlocks() {
+        val result = PlanEvaluator.evaluate(eastRequest(customPaceSecPerKm = 250.0)) { duration, seed, _, km ->
+            buildLoopTrack(duration, seed, km)
+        }
+
+        assertFalse(result.ok)
+        assertTrue(result.blockers.any { it.contains("不在学校区间") })
+    }
+
+    @Test
+    fun advancedOptionTextParsingEnforcesTheBounds() {
+        assertEquals(3.0, RunOptions.parseDistance("3.0")!!, 0.0)
+        assertNull(RunOptions.parseDistance("1.0"))
+        assertNull(RunOptions.parseDistance("x"))
+
+        assertEquals(330.0, RunOptions.parsePace("5:30")!!, 0.0)
+        assertEquals(330.0, RunOptions.parsePace("5.5")!!, 0.0)
+        assertNull(RunOptions.parsePace("2:59"))
+        assertNull(RunOptions.parsePace("9:01"))
+        assertEquals("5:30", RunOptions.formatPace(330.0))
+    }
+
     @Test
     fun fenceRejectsSegmentsCrossingAnExcludedArea() {
+        // The server serialises vertices as "lng,lat"; keep the fixture in the real order so a
+        // swapped parser fails here instead of blocking a live run.
         val raw = JSONObject().put(
-            "run_zone_latlng", JSONArray(listOf("39.94,116.34", "39.94,116.35", "39.95,116.35", "39.95,116.34")),
+            "run_zone_latlng", JSONArray(listOf("116.34,39.94", "116.35,39.94", "116.35,39.95", "116.34,39.95")),
         ).put(
             "run_zone_latlng_invalid",
-            JSONArray(listOf("39.944,116.344", "39.944,116.346", "39.946,116.346", "39.946,116.344")),
+            JSONArray(listOf("116.344,39.944", "116.346,39.944", "116.346,39.946", "116.344,39.946")),
         )
         val fence = RunFence.from(raw)!!
         val start = TrackPoint(0.0, 39.945, 116.343)

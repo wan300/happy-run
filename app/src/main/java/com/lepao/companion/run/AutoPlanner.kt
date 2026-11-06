@@ -4,6 +4,7 @@ import android.content.Context
 import com.lepao.companion.core.Identity
 import com.lepao.companion.core.ReadinessView
 import com.lepao.companion.core.RouteTemplate
+import com.lepao.companion.core.RunOptions
 import com.lepao.companion.core.RunRules
 import com.lepao.companion.core.TimeRule
 
@@ -18,7 +19,13 @@ object AutoPlanner {
 
     private const val UNSUPPORTED_PREFIX = "配置需要尚未实现的分支"
 
-    fun plan(context: Context, rules: RunRules, identity: Identity, nowEpoch: Long): ReadinessView {
+    fun plan(
+        context: Context,
+        rules: RunRules,
+        identity: Identity,
+        nowEpoch: Long,
+        options: RunOptions = RunOptions(),
+    ): ReadinessView {
         fun blocked(reason: String) = ReadinessView.blocked(reason).copy(rules = rules)
         if (!EastCampusZone.supports(rules, identity["school_id"])) {
             return blocked("东校区模板仅适用于北京交通大学的跑步配置")
@@ -50,6 +57,8 @@ object AutoPlanner {
             // A new random seed per attempt: a run must never repeat a previous track.
             seed = System.currentTimeMillis(),
             routeTemplate = template,
+            customDistanceKm = options.distanceKm,
+            customPaceSecPerKm = options.paceSecPerKm,
         )
         val result = PlanEvaluator.evaluate(request, validateTrack = { fence?.blocker(it) }) { durationSec, seed, _, km ->
             RouteEngine.buildTrack(
