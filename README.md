@@ -32,7 +32,7 @@ cd android
 - **登录态**：本地 VPN 只放行官方乐跑，通过 VPN 的 HTTP 代理 → 本地 CONNECT 代理 → 自签证书终止 TLS，解析登录响应与一条成功业务请求，得到 `access_token/refresh_token`、身份字段、UMID、Cookie、UA。官方应用在 PC 实测接受未安装的新 CA，故无需改系统证书。
 - **存储**：AES-256-GCM + Android Keystore，临时文件 + fsync + 原子替换；审计日志逐行加密。应用重启后恢复会话与未完成状态。
 - **协议**：`core/Protocol.kt` 是 PC `lepao_client/protocol.py` 的逐字节移植（MD5 签名、AES-CBC、Android 式 JSON 斜杠转义、MIME Base64、动态字段、记录签名），由 Python 生成的黄金夹具做 JVM 对拍。
-- **固定参数**：里程 2.03 km、配速 365 s/km、步数 1690、2 个打卡点，按学校规则自动夹取；每次使用新种子在 374 点走廊上单向重新采样轨迹（随机正/反向、≤60 m 起点偏移与横向摆动），并对选中的打卡点做平滑绕行，保证最近采样点距点位 <20 m（目标 4 m）；未被绕行的点位在 20 m 门限下直接舍弃。
+- **固定参数**：里程 2.03 km、配速 365 s/km、步数 1690、2 个打卡点，按学校规则自动夹取；每次使用新种子在 374 点走廊上单向重新采样轨迹（随机正/反向、≤60 m 起点偏移与横向摆动），并对选中的打卡点做平滑绕行，保证最近采样点距点位 <20 m（目标 4 m）；未被绕行的点位在 20 m 门限下直接舍弃。**必经点（`point_list[].type=="1"`）始终优先入选并强制绕行**，不可达时直接报 blocker，避免提交被判“打卡点异常”的记录。
 - **状态机**：`new → prepared → start_pending → running → uploading → stop_pending → stop_acknowledged → sensor_pending → submitted → verified`。所有写请求先落盘；超时/未知结果进入 `uncertain` 并禁止自动重发。
 - **回查**：REST 只读 `Run/recordDetailV270`，核对账号、起跑时间、跑区、`record_status`、里程、用时、步数、轨迹对象键。学期统计（RunStat/H5）不在本应用校验范围，界面单独标注。
 

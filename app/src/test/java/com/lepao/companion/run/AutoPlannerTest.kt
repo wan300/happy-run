@@ -235,6 +235,52 @@ class AutoPlannerTest {
     }
 
     @Test
+    fun mandatoryPointAlwaysWinsASlot() {
+        // `requiredPoints` is 2. Without the mandatory handling the planner would pick `near` and
+        // `middle`; the 必经点 `gate` must take one of the two slots even though it is not special
+        // geometrically.
+        val checkpoints = listOf(
+            GeoPoint("near", 30.0002, 120.0),
+            GeoPoint("gate", 30.0020, 120.0, mandatory = true),
+            GeoPoint("far", 30.0040, 120.0),
+        )
+        val result = evaluate(request(checkpoints = checkpoints))
+
+        assertTrue(result.ok)
+        assertEquals(listOf("near", "gate"), result.plan!!.pointIds)
+    }
+
+    @Test
+    fun unreachableMandatoryPointBlocksInsteadOfSubmitting() {
+        val checkpoints = listOf(
+            GeoPoint("gate", 31.0, 120.0, mandatory = true),
+            GeoPoint("near", 30.0002, 120.0),
+        )
+
+        val result = evaluate(request(checkpoints = checkpoints))
+
+        assertFalse(result.ok)
+        assertTrue(result.blockers.any { it.contains("必经打卡点 gate") })
+    }
+
+    @Test
+    fun rulesParseTheMandatoryPointType() {
+        val raw = org.json.JSONObject().put(
+            "run_line_info",
+            org.json.JSONObject().put(
+                "point_list",
+                org.json.JSONArray()
+                    .put(org.json.JSONObject().put("id", "1").put("jingwei", "30.0,120.0").put("type", "1"))
+                    .put(org.json.JSONObject().put("id", "2").put("jingwei", "30.1,120.1").put("type", "2")),
+            ),
+        )
+
+        val rules = com.lepao.companion.core.RunRules(raw)
+
+        assertEquals(listOf(true, false), rules.checkpoints.map { it.mandatory })
+    }
+
+    @Test
     fun invalidDistanceIntervalBlocks() {
         val result = evaluate(request(timeRules = listOf(rule(minDistance = 2.0, maxDistance = 2.0))))
 
@@ -275,15 +321,18 @@ class AutoPlannerTest {
         val checkpoints = listOf(
             GeoPoint("1", 30.0002, 120.0),
             GeoPoint("2", 30.0020, 120.0),
-            GeoPoint("3", 30.0040, 120.0),
+            GeoPoint("gate", 30.0040, 120.0, mandatory = true),
         )
         val result = evaluate(request(checkpoints = checkpoints))
 
         assertTrue(result.ok)
-        val restored = com.lepao.companion.core.PlannedRun.fromJson(result.plan!!.toJson().toString())
-        // `needed` is 2, so the planner steers past the two closest checkpoints only.
+        val plan = result.plan!!
+        // `needed` is 2: the mandatory 必经点 (even though it is the farthest) plus the closest
+        // ordinary point.
+        assertEquals(listOf("1", "gate"), plan.pointIds)
+        val restored = com.lepao.companion.core.PlannedRun.fromJson(plan.toJson().toString())
         assertEquals(2, restored.via.size)
-        assertEquals(listOf("1", "2"), restored.via.map { it.id })
+        assertEquals(listOf("1", "gate"), restored.via.map { it.id })
         assertEquals(30.0002, restored.via.first().latitude, 0.0)
         assertEquals(120.0, restored.via.first().longitude, 0.0)
     }

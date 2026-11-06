@@ -34,9 +34,9 @@ STEP_INTERVAL   = 60 s
 5. 配速：目标 365，若不在 `[lower+1, upper-1]` 则夹取；区间非法 → 失败。
 6. `duration = round(distance * pace)`，`duration >= 60`；`stepNum = round(distance * 832.5)`。
 7. 种子：`System.currentTimeMillis()`（每次不同）。
-8. 生成轨迹分两步：先 `RouteEngine.buildTrack(context, duration, seed, [])` 得到基准轨迹，在基准轨迹上按“最近采样点距离从近到远、相邻打卡时刻 `>= 30 s`、距离 `<= 264 m`”选出 `needed` 个绕行目标；再用 `buildTrack(context, duration, seed, targets)` 生成绕行轨迹（见 §6.2）。只绕行选中的点，避免为无关点位把整条路线拖出校园。
-9. 打卡点数量 `needed = max(2, min(rule.minLogNum, 4), min(rules.pointNumOnline, 3))`；`rules.checkpoints.size >= needed`，否则失败。
-10. 每个候选点找轨迹最近样本（haversine），保留 `gap <= 20 m` 且 `5 <= t <= duration-5` 的点；按 t 排序后贪心选择：相邻打卡时间间隔 `>= 30 s`；凑不齐 `needed` → 失败（“点位与轨迹不匹配：需要 N 个 20 m 内的打卡点，匹配到 M 个”）。
+8. 生成轨迹分两步：先 `RouteEngine.buildTrack(context, duration, seed, [])` 得到基准轨迹，在基准轨迹上**先取全部必经点（`point_list[].type == "1"`），再按“最近采样点距离从近到远、相邻打卡时刻 `>= 30 s`、距离 `<= 264 m`”补足 `needed` 个绕行目标**；再用 `buildTrack(context, duration, seed, targets)` 生成绕行轨迹（见 §6.2）。只绕行选中的点，避免为无关点位把整条路线拖出校园。
+9. 打卡点数量 `needed = max(2, min(rule.minLogNum, 4), min(rules.pointNumOnline, 3))`；`rules.checkpoints.size >= needed`，否则失败。必经点不受 `needed` 限制：必经点数多于 `needed` 时按必经点数量扩额；必经点超出绕行上限（264 m）或不在打卡时间窗内 → 直接 blocker（“必经打卡点 …”），不再提交必然被判无效的记录。
+10. 每个候选点找轨迹最近样本（haversine），保留 `gap <= 20 m` 且 `5 <= t <= duration-5` 的点；**先放必经点，再按 t 补普通点**，相邻打卡时间间隔 `>= 30 s`；凑不齐 `needed` → 失败（“点位与轨迹不匹配：需要 N 个 20 m 内的打卡点，匹配到 M 个”）。
 11. 打卡点坐标取轨迹样本本身（与 PC 相同），`distance=0.65`，`arcM=样本弧长`；`checkinT=样本 t`。
 12. `passTotal = max(60, track.size - 5)`，`passEffectiveNum=0`，`areaValid="1"`，`collector="android-app"`；`plan.via` 持久化点位表，供服务重建同一条绕行轨迹。
 13. 警告：里程被夹取、配速被夹取、点位偏移 15–20 m 时各追加一条。

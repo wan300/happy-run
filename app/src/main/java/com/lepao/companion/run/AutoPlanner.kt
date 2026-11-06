@@ -30,7 +30,9 @@ object AutoPlanner {
             runStartTime = rules.runStartTime,
             runEndTime = rules.runEndTime,
             timeRules = rules.timeRules,
-            checkpoints = rules.checkpoints.map { GeoPoint(it.id, it.latitude, it.longitude) },
+            checkpoints = rules.checkpoints.map {
+                GeoPoint(it.id, it.latitude, it.longitude, it.mandatory)
+            },
             pointNumOnline = rules.pointNumOnline,
             // A new random seed per attempt: a run must never repeat a previous track.
             seed = System.currentTimeMillis(),

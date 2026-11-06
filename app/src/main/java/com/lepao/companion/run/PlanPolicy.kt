@@ -26,7 +26,13 @@ data class TrackPoint(
 )
 
 /** A checkpoint candidate from `beforeRun` (`run_line_info.point_list`). */
-data class GeoPoint(val id: String, val latitude: Double, val longitude: Double)
+data class GeoPoint(
+    val id: String,
+    val latitude: Double,
+    val longitude: Double,
+    /** `type == "1"`: a 必经点. Skipping one makes the server reject the record ("打卡点异常"). */
+    val mandatory: Boolean = false,
+)
 
 /**
  * Everything the planner reads out of `beforeRun` plus the moments that must be deterministic.
@@ -152,6 +158,7 @@ data class SelectedPoint(
     val lng: Double,
     val arc: Double,
     val gapM: Double,
+    val mandatory: Boolean = false,
 )
 
 data class SelectionResult(
@@ -183,21 +190,24 @@ object CheckpointSelector {
     /** A checkpoint the track should be steered past, with its nearest base-track moment. */
     data class Target(val point: GeoPoint, val t: Double, val gapM: Double)
 
+    /** Steering targets plus a blocker when a 必经点 cannot be used. */
+    data class TargetPlan(val points: List<GeoPoint>, val error: String?)
+
     /**
      * Choose the checkpoints worth steering past.
      *
-     * The closest [needed] checkpoints to the base track win, subject to a [MIN_SPACING_SEC] gap in
-     * check-in time, so the detours stay small and the greedy check-in order stays satisfiable. The
-     * generator only bends towards these points; the others stay on the corridor and the 20 m rule
-     * discards them.
+     * 必经点 (`type == "1"`, [GeoPoint.mandatory]) always take a slot first: the school rejects a
+     * record that skips one ("打卡点异常"). The remaining slots go to the closest ordinary points,
+     * subject to a [MIN_SPACING_SEC] gap in check-in time. The generator only bends towards these
+     * points; the others stay on the corridor and the 20 m rule discards them.
      */
     fun targets(
         checkpoints: List<GeoPoint>,
         track: List<TrackPoint>,
         durationSec: Int,
         needed: Int,
-    ): List<GeoPoint> {
-        if (needed <= 0 || track.size < 3) return emptyList()
+    ): TargetPlan {
+        if (needed <= 0 || track.size < 3) return TargetPlan(emptyList(), null)
         val earliest = EDGE_MARGIN_SEC
         val latest = durationSec - EDGE_MARGIN_SEC
         val candidates = ArrayList<Target>(checkpoints.size)
@@ -211,17 +221,37 @@ object CheckpointSelector {
                     bestT = sample.t
                 }
             }
-            if (bestGap > REACH_M) continue
-            if (bestT < earliest || bestT > latest) continue
             candidates.add(Target(checkpoint, bestT, bestGap))
         }
-        candidates.sortBy { it.gapM }
-        val chosen = ArrayList<Target>(needed)
-        for (candidate in candidates) {
-            if (chosen.all { abs(it.t - candidate.t) >= MIN_SPACING_SEC }) chosen.add(candidate)
-            if (chosen.size == needed) break
+        val wanted = max(needed, candidates.count { it.point.mandatory })
+        val chosen = ArrayList<Target>(wanted)
+        for (candidate in candidates.filter { it.point.mandatory }.sortedBy { it.t }) {
+            if (candidate.gapM > REACH_M) {
+                return TargetPlan(
+                    emptyList(),
+                    "必经打卡点 ${candidate.point.id} 距轨迹 ${round(candidate.gapM)} m，" +
+                        "超过绕行上限 ${REACH_M.toInt()} m",
+                )
+            }
+            if (candidate.t < earliest || candidate.t > latest) {
+                return TargetPlan(emptyList(), "必经打卡点 ${candidate.point.id} 不在可打卡时间窗内")
+            }
+            if (chosen.any { abs(it.t - candidate.t) < MIN_SPACING_SEC }) {
+                return TargetPlan(
+                    emptyList(),
+                    "必经打卡点 ${candidate.point.id} 与其它必经点的打卡时刻间隔不足 ${MIN_SPACING_SEC.toInt()} s",
+                )
+            }
+            chosen.add(candidate)
         }
-        return chosen.map { it.point }
+        val ordinary = candidates
+            .filter { !it.point.mandatory && it.gapM <= REACH_M && it.t >= earliest && it.t <= latest }
+            .sortedBy { it.gapM }
+        for (candidate in ordinary) {
+            if (chosen.size >= wanted) break
+            if (chosen.all { abs(it.t - candidate.t) >= MIN_SPACING_SEC }) chosen.add(candidate)
+        }
+        return TargetPlan(chosen.sortedBy { it.t }.map { it.point }, null)
     }
 
     fun select(
@@ -251,22 +281,41 @@ object CheckpointSelector {
             if (bestGap > MAX_GAP_M) continue
             if (sample.t < earliest || sample.t > latest) continue
             candidates.add(
-                SelectedPoint(checkpoint.id, sample.t, sample.lat, sample.lng, sample.arc, bestGap),
+                SelectedPoint(
+                    checkpoint.id,
+                    sample.t,
+                    sample.lat,
+                    sample.lng,
+                    sample.arc,
+                    bestGap,
+                    checkpoint.mandatory,
+                ),
             )
         }
-        candidates.sortBy { it.t }
-        val chosen = ArrayList<SelectedPoint>()
-        for (candidate in candidates) {
-            if (chosen.isEmpty() || candidate.t - chosen.last().t >= MIN_SPACING_SEC) {
-                chosen.add(candidate)
-            }
-            if (chosen.size == needed) break
+        val missing = checkpoints.filter { it.mandatory && candidates.none { c -> c.id == it.id } }
+        if (missing.isNotEmpty()) {
+            return SelectionResult(
+                emptyList(),
+                emptyList(),
+                "必经打卡点 ${missing.first().id} 未能在轨迹 20 m 内匹配",
+            )
         }
-        if (chosen.size < needed) {
+        val wanted = max(needed, candidates.count { it.mandatory })
+        val chosen = ArrayList<SelectedPoint>(wanted)
+        // 必经点 first: dropping one makes the server reject the whole record.
+        for (candidate in candidates.filter { it.mandatory }.sortedBy { it.t }) {
+            if (chosen.all { abs(it.t - candidate.t) >= MIN_SPACING_SEC }) chosen.add(candidate)
+        }
+        for (candidate in candidates.filterNot { it.mandatory }.sortedBy { it.t }) {
+            if (chosen.size >= wanted) break
+            if (chosen.all { abs(it.t - candidate.t) >= MIN_SPACING_SEC }) chosen.add(candidate)
+        }
+        chosen.sortBy { it.t }
+        if (chosen.size < wanted) {
             return SelectionResult(
                 chosen,
                 emptyList(),
-                "点位与轨迹不匹配：需要 $needed 个 20 m 内的打卡点，匹配到 ${chosen.size} 个",
+                "点位与轨迹不匹配：需要 $wanted 个 20 m 内的打卡点，匹配到 ${chosen.size} 个",
             )
         }
         val warnings = chosen
@@ -334,7 +383,9 @@ object PlanEvaluator {
         // so the 20 m rule can be met without dragging the whole route across the campus.
         val baseTrack = trackFactory(duration, request.seed, emptyList())
         if (baseTrack.size < 3) return blocked(listOf("生成的轨迹样本不足，无法选择打卡点"))
-        val targets = CheckpointSelector.targets(request.checkpoints, baseTrack, duration, needed)
+        val targetPlan = CheckpointSelector.targets(request.checkpoints, baseTrack, duration, needed)
+        if (targetPlan.error != null) return blocked(listOf(targetPlan.error))
+        val targets = targetPlan.points
         val track = if (targets.isEmpty()) baseTrack else trackFactory(duration, request.seed, targets)
         val selection = CheckpointSelector.select(request.checkpoints, track, duration, needed)
         if (selection.error != null) return blocked(listOf(selection.error))

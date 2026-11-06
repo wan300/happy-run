@@ -44,6 +44,11 @@ data class Checkpoint(
     val longitude: Double,
     val address: String,
     val index: String,
+    /**
+     * `type == "1"` in `run_line_info.point_list` marks a 必经点 (mandatory check-in). The school
+     * rejects a record that skips it ("打卡点异常"), so the planner must never drop one.
+     */
+    val mandatory: Boolean = false,
 )
 
 /** Local entry cutoff confirmed by the user; an earlier server cutoff remains authoritative. */
@@ -108,6 +113,7 @@ class RunRules(val raw: JSONObject) {
                     longitude = longitude,
                     address = item.optString("address"),
                     index = item.optString("index"),
+                    mandatory = item.optString("type", "2") == "1",
                 ),
             )
         }
@@ -120,7 +126,16 @@ class RunRules(val raw: JSONObject) {
                 if (comma <= 0) continue
                 val latitude = jingwei.substring(0, comma).trim().toDoubleOrNull() ?: continue
                 val longitude = jingwei.substring(comma + 1).trim().toDoubleOrNull() ?: continue
-                result.add(Checkpoint(item.optString("id"), latitude, longitude, item.optString("address"), item.optString("index")))
+                result.add(
+                    Checkpoint(
+                        item.optString("id"),
+                        latitude,
+                        longitude,
+                        item.optString("address"),
+                        item.optString("index"),
+                        mandatory = item.optString("type", "2") == "1",
+                    ),
+                )
             }
         }
         result

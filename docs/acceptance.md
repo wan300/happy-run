@@ -13,7 +13,7 @@
 
 ### 1.1 结果汇总
 
-- `:app:testDebugUnitTest`：**158 个用例全部通过，0 失败 / 0 跳过 / 0 错误**（2026-11-06 复跑，含打卡点 20 m 门限与绕行用例）。
+- `:app:testDebugUnitTest`：**161 个用例全部通过，0 失败 / 0 跳过 / 0 错误**（2026-11-06 复跑，含打卡点 20 m 门限、绕行与必经点用例）。
 - `:app:assembleDebug`：**成功**；产物 `android/app/build/outputs/apk/debug/app-debug.apk`。
 - 协议黄金夹具：`android/tools/gen_fixtures.py` → `android/app/src/test/resources/fixtures/protocol_golden.json`
   （仅假数据：固定 identity / UMID / `A`×32 token / 1793778542 / nonce 123456 / timeStr=`e`×32）。
@@ -28,7 +28,7 @@
 | `run.RunEngineFsmTest` | 20 | 通过 | 正常路径（心跳 60/120/240/480 → 上传 → stop → 传感器 → 回查）；写前落盘（LOCATION_PENDING/STOP_PENDING/upload_pending）；stop/location/PUT 超时不重发；恢复矩阵（prepared/start_pending/location_pending/stop_pending/sensor_pending/uploading±upload_pending/stop_acknowledged/submitted/verified/failed）；stop 校验失败禁止继续登记；STS 凭据重试边界（仅凭据调用） |
 | `run.StopFieldsTest` | 6 | 通过 | stop 38 字段精确组装（deviceFields 回填、record_str 规则、测量/材料字段、保留字段不可覆盖请求上下文） |
 | `run.ManifestValidatorTest` | 12 | 通过 | manifest 字段集合、距离两位小数、时间/步数/打卡/配速/里程/IP 校验 |
-| `run.AutoPlannerTest` | 21 | 通过 | 固定画像 2.03 km / 365 s/km / 832.5 步、规则夹取、时间窗/星期/唯一时段、20 m 打卡门限内外、绕行目标选择、`plan.via` 持久化与旧版 plan 兼容、blockers/warnings |
+| `run.AutoPlannerTest` | 24 | 通过 | 固定画像 2.03 km / 365 s/km / 832.5 步、规则夹取、时间窗/星期/唯一时段、20 m 打卡门限内外、绕行目标选择、**必经点（type==1）强制入选/不可达 blocker/type 解析**、`plan.via` 持久化与旧版 plan 兼容、blockers/warnings |
 | `run.VerifierTest` | 9 | 通过 | stop 5 项 / detail 8 项回查、数值类型宽容、URL decode 后对象键匹配、record_id 数字校验 |
 | `capture.CaptureExtractorTest` | 10 | 通过 | 加密请求提取 identity+UMID（后缀 md5 校验）、普通表单不产 UMID、stop 动态字段不被当 UMID、加密/明文登录响应 token 对、token 别名规则、Cookie 解析 |
 | `capture.CaptureSessionTest` | 9 | 通过 | 状态相位、账号切换丢弃旧 UMID、token 族不匹配禁用自动续期、endpoint 去重计数、stop 提供 deviceFields、生命周期保留材料 |
