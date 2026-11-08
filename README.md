@@ -2,14 +2,25 @@
 
 把 PC 上已跑通的链路迁移为**未 root 安卓真机上独立运行**的应用：获取并维护登录态 → 读取学校跑步配置 → 模拟生成轨迹/步数/传感器 → 上传并结束提交 → 回查官方记录。
 
-> 当前状态：代码已按 PC 验证过的协议与流程实现，**尚未做真机联调**。PC 端已在线验收的记录是 `259921`（2.03 km / 741 s / 1690 步，`record_status=1`，`Run/recordDetailV270` 全项匹配）。Android 端需要在真机上复验登录捕获、代理兼容性、前台服务存活和真实写入，清单见 [docs/acceptance.md](docs/acceptance.md)（由 QA 生成）。
+## 正式版下载与安装
+
+**步道乐飞 1.0.11**（东校区版，`versionCode` 12）。本次移除了首页副标题。安装包使用原正式版签名，支持 Android 10 及以上，可在已安装同签名旧版的设备上直接覆盖安装。
+
+安装包发布在 GitHub Packages 的 Maven 仓库，坐标为 `com.lepao.companion:happy-run-android:1.0.11`，文件扩展名为 `.apk`。下载时使用 GitHub 用户名和拥有 `read:packages` 权限的经典访问令牌。以下命令会提示输入令牌。
+
+```bash
+curl --fail --location --user YOUR_GITHUB_USERNAME \
+  --output happy-run-android-1.0.11.apk \
+  https://maven.pkg.github.com/wan300/happy-run/com/lepao/companion/happy-run-android/1.0.11/happy-run-android-1.0.11.apk
+```
+
+将 APK 保存到手机后，从文件管理器打开并按系统提示安装。首次从该来源安装时，按提示允许安装应用。
 
 ## 构建
 
 ```bash
-cd android
-./gradlew assembleDebug          # app/build/outputs/apk/debug/app-debug.apk
-./gradlew testDebugUnitTest      # 纯 JVM 单测（协议对拍、轨迹、状态机）
+./gradlew assembleRelease        # app/build/outputs/apk/release/app-release.apk
+./gradlew testReleaseUnitTest    # 纯 JVM 单测（协议对拍、轨迹、状态机）
 ```
 
 环境：JDK 17、Android SDK（compileSdk 35 / build-tools 36.1.0）、Gradle 8.9（wrapper）、AGP 8.7.3、Kotlin 2.0.21。minSdk 29（Android 10），targetSdk 35。依赖：AppCompat、OkHttp、Coroutines、BouncyCastle（本地证书）。
@@ -54,8 +65,7 @@ docs/        架构、采集、跑步引擎、UI、验收规格
 
 - 首次登录必须由官方乐跑完成；本应用不伪造第三方授权、不接管账号密码。
 - 新建跑步计划仅支持北京交通大学东校区。规则要求人脸、设备、极验或抓拍等尚未实现的分支时停止。
-- 轨迹与传感器是合成的，不以本人真实运动为前提；写入的是官方服务上的一条真实记录，但**是否计入学期统计**需在官方应用另行核对。
-- 真机验证尚未执行；不要在没有核对官方记录的情况下把“上传成功/HTTP 200”当作验收结果。
+- 轨迹与传感器是合成的，不以本人真实运动为前提；写入的是官方服务上的一条真实记录。
 
 ## 相关文档
 
