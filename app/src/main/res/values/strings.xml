@@ -3,7 +3,6 @@
     <string name="app_name">步道乐飞</string>
 
     <!-- 主界面 -->
-    <string name="main_subtitle">本机运行 · 不连接电脑</string>
     <string name="footer_credit">made by wan300</string>
 
     <!-- 登录态卡片 -->
