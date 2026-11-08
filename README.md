@@ -6,13 +6,17 @@
 
 **步道乐飞 1.0.11**（东校区版，`versionCode` 12）。本次移除了首页副标题。安装包使用原正式版签名，支持 Android 10 及以上，可在已安装同签名旧版的设备上直接覆盖安装。
 
-安装包发布在 GitHub Packages 的 Maven 仓库，坐标为 `com.lepao.companion:happy-run-android:1.0.11`，文件扩展名为 `.apk`。下载时使用 GitHub 用户名和拥有 `read:packages` 权限的经典访问令牌。以下命令会提示输入令牌。
+安装包发布在 GitHub Packages 的 Maven 仓库，坐标为 `com.lepao.companion:happy-run-android:1.0.11`。[查看 1.0.11 安装包](https://github.com/wan300/happy-run/packages/3373843?version=1.0.11)
+
+通过命令行下载时，使用 GitHub 用户名和拥有 `read:packages` 权限的经典访问令牌。以下命令会提示输入令牌。
 
 ```bash
 curl --fail --location --user YOUR_GITHUB_USERNAME \
   --output happy-run-android-1.0.11.apk \
   https://maven.pkg.github.com/wan300/happy-run/com/lepao/companion/happy-run-android/1.0.11/happy-run-android-1.0.11.apk
 ```
+
+APK 的 SHA-256 为 `f22ff697c6b48154e3925b2a28adc126ea5cc7cc0b2ecda4a99b642e802f8a90`。
 
 将 APK 保存到手机后，从文件管理器打开并按系统提示安装。首次从该来源安装时，按提示允许安装应用。
 
